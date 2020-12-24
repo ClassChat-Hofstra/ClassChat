@@ -1,0 +1,31 @@
+body {
+    background-color: #f0f2f5;
+    
+}
+
+.container-fluid {
+    padding: 10% 15%;
+}
+
+.form-signin {
+    margin: auto;
+    width: 350px;
+    padding: 4% 4%;
+    background-color: white;
+    text-align: center;
+}
+
+.login-form {
+    padding: 0 5%;
+}
+
+.login-form input {
+    margin-bottom: 10px;
+}
+
+.big-heading {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+
+}
