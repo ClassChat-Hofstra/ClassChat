@@ -1,14 +1,70 @@
 import React, { useState } from "react";
 import { Form, Button, Modal } from "react-bootstrap";
+import { connect } from "react-redux";
+import { Link } from "react-router-dom";
+import RegisterForm from "./RegisterForm";
 
-function LoginForm() {
-  const [show, setShow] = useState(false);
+function LoginForm(props) {
 
-  const handleClose = () => setShow(false);
-  const handleShow = () => setShow(true);
+  
+  const [modalOpen, setModalOpen] = useState({
+    modalOpen: false,
+  });
+
+  function handleModalOpen() {
+    setModalOpen((prevState) => {
+      return {
+        modalOpen: !prevState.modalOpen,
+      };
+    });
+  }
+
+  const [loginState, setLoginState] = useState({
+    email: "",
+    password: "",
+    errors: {},
+  });
+
+  function onChange(e) {
+    // console.log("Name: " + e.target.id);
+    setLoginState((prevValue) => {
+      if (e.target.id === "email") {
+        return {
+          email: e.target.value,
+          password: prevValue.password,
+          errors: prevValue.errors,
+        };
+      } else if (e.target.id === "password") {
+        return {
+          email: prevValue.email,
+          password: e.target.value,
+          errors: prevValue.errors,
+        };
+        // } else if (e.target.id === "errors") {
+        //   return {
+        //     email: prevValue.email,
+        //     password: prevValue.password,
+        //     errors: e.target.value,
+        //   };
+      }
+    });
+  }
+
+
+  function onSubmit(e) {
+    e.preventDefault();
+
+    const userData = {
+      email: loginState.email,
+      password: loginState.password,
+    };
+
+    console.log(userData);
+  }
+
   return (
     <div className="form-signin shadow-lg rounded">
-      <Form>
+      <Form onSubmit={onSubmit}>
         <img
           className="mb-4"
           src="https://getbootstrap.com/docs/4.0/assets/brand/bootstrap-solid.svg"
@@ -17,59 +73,43 @@ function LoginForm() {
           height="72"
         />
         <Form.Group size="lg" controlId="email">
-          <Form.Control autoFocus type="email" placeholder="Email" />
+          <Form.Control
+            onChange={onChange}
+            autoFocus
+            type="email"
+            placeholder="Email"
+          />
         </Form.Group>
         <Form.Group size="lg" controlId="password">
-          <Form.Control type="password" placeholder="Password" />
+          <Form.Control
+            onChange={onChange}
+            type="password"
+            placeholder="Password"
+          />
         </Form.Group>
         <Button block size="lg" type="submit">
           Login
         </Button>
-        <Button
-          onClick={() => handleShow(true)}
-          variant="success"
-          block
-          size="lg"
-          type="button"
-        >
-          Create an Account
-        </Button>
+
+          <Button
+            style={{ marginTop: "8px" }}
+            onClick={handleModalOpen}
+            variant="success"
+            block
+            size="lg"
+            type="button"
+          >
+            Create an Account
+          </Button>
+
       </Form>
-      <Modal
-        size="sm"
-        show={show}
-        onHide={handleClose}
-        backdrop="static"
-        keyboard={false}
-      >
-        <Modal.Header closeButton>
-          <Modal.Title>Register</Modal.Title>
-        </Modal.Header>
-        <Form>
-          <Modal.Body>
-            <Form.Group size="lg" controlId="registerName">
-              <Form.Control autoFocus type="text" placeholder="Name" />
-            </Form.Group>
-            <Form.Group size="lg" controlId="registerEmail">
-              <Form.Control autoFocus type="email" placeholder="Email" />
-            </Form.Group>
-            <Form.Group size="lg" controlId="registerPassword">
-              <Form.Control type="password" placeholder="Password" />
-            </Form.Group>
-            <Form.Group size="lg" controlId="repeatPassword">
-              <Form.Control type="password" placeholder="Repeat Password" />
-            </Form.Group>
-          </Modal.Body>
-          <Modal.Footer>
-            <Button variant="secondary" onClick={handleClose}>
-              Close
-            </Button>
-            <Button variant="success">Create your Account</Button>
-          </Modal.Footer>
-        </Form>
-      </Modal>
+      <RegisterForm
+        modalOpen={modalOpen.modalOpen}
+        handleModalOpen={handleModalOpen}
+      />
     </div>
   );
 }
+
 
 export default LoginForm;

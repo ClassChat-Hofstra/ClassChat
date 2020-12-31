@@ -29,3 +29,11 @@ body {
     margin-bottom: 10px;
 
 }
+
+a {
+    text-decoration: none;
+}
+
+a:focus, a:hover, a:visited, a:link, a:active {
+    text-decoration: none;
+}
