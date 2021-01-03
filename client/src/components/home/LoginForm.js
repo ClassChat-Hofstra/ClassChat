@@ -1,12 +1,18 @@
-import React, { useState } from "react";
-import { Form, Button, Modal } from "react-bootstrap";
+import React, { useState, useRef } from "react";
+import { Form, Button, Modal, Alert } from "react-bootstrap";
 import { connect } from "react-redux";
-import { Link } from "react-router-dom";
+import { useAuth } from "../../contexts/AuthContext";
+import { Link, useHistory } from "react-router-dom";
 import RegisterForm from "./RegisterForm";
 
 function LoginForm(props) {
+  const emailRef = useRef();
+  const passwordRef = useRef();
+  const history = useHistory();
+  const { login } = useAuth();
+  const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
 
-  
   const [modalOpen, setModalOpen] = useState({
     modalOpen: false,
   });
@@ -50,16 +56,19 @@ function LoginForm(props) {
     });
   }
 
-
-  function onSubmit(e) {
+  async function onSubmit(e) {
     e.preventDefault();
 
-    const userData = {
-      email: loginState.email,
-      password: loginState.password,
-    };
+    try {
+      setError("");
+      setLoading(true);
+      await login(emailRef.current.value, passwordRef.current.value);
+      history.push("/home");
+    } catch {
+      setError("Failed to log in");
+    }
 
-    console.log(userData);
+    setLoading(false);
   }
 
   return (
@@ -72,11 +81,13 @@ function LoginForm(props) {
           width="72"
           height="72"
         />
+        {error && <Alert variant="danger">{error}</Alert>}
         <Form.Group size="lg" controlId="email">
           <Form.Control
             onChange={onChange}
             autoFocus
             type="email"
+            ref={emailRef}
             placeholder="Email"
           />
         </Form.Group>
@@ -84,32 +95,33 @@ function LoginForm(props) {
           <Form.Control
             onChange={onChange}
             type="password"
+            ref={passwordRef}
             placeholder="Password"
           />
         </Form.Group>
         <Button block size="lg" type="submit">
           Login
         </Button>
-
-          <Button
-            style={{ marginTop: "8px" }}
-            onClick={handleModalOpen}
-            variant="success"
-            block
-            size="lg"
-            type="button"
-          >
-            Create an Account
-          </Button>
-
+        <Button
+          style={{ marginTop: "8px" }}
+          onClick={handleModalOpen}
+          variant="success"
+          block
+          size="lg"
+          type="button"
+        >
+          Create an Account
+        </Button>
       </Form>
       <RegisterForm
         modalOpen={modalOpen.modalOpen}
         handleModalOpen={handleModalOpen}
       />
+      <div className="w-100 text-center mt-2">
+        <Link to="/forgot-password">Forgot Password?</Link>
+      </div>
     </div>
   );
 }
-
 
 export default LoginForm;

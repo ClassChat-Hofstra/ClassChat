@@ -1,5 +1,6 @@
 import React, { useRef, useState } from "react";
 import { useAuth } from "../../contexts/AuthContext";
+import { Link, useHistory } from "react-router-dom";
 import { Form, Button, Modal, Alert } from "react-bootstrap";
 
 function RegisterForm(props) {
@@ -8,7 +9,7 @@ function RegisterForm(props) {
   const emailRef = useRef();
   const passwordRef = useRef();
   const password2Ref = useRef();
-
+  const history = useHistory();
   const { signup } = useAuth();
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
@@ -74,6 +75,7 @@ function RegisterForm(props) {
       setError("");
       setLoading(true);
       await signup(emailRef.current.value, passwordRef.current.value);
+      history.push("/home");
     } catch {
       setError("Failed to create an account");
     }
