@@ -1,22 +1,26 @@
 import React from "react";
-import Home from "./home/home";
+import Home from "./home/Home";
 import RegisterForm from "./home/RegisterForm";
 import { Route, Switch, BrowserRouter as Router } from "react-router-dom";
 import { AuthProvider } from "../contexts/AuthContext";
 import Dashboard from "./dashboard/Dashboard";
+import PublicRoute from "./PublicRoute";
 import PrivateRoute from './PrivateRoute';
 import ForgotPassword from './ForgotPassword';
 import UpdateProfile from "./UpdateProfile";
+import EditCourses from './edit-courses/EditCourses';
+import { Provider } from "react-redux";
 
 function App() {
   return (
     <Router>
       <AuthProvider>
         <Switch>
-          <Route path="/" component={Home} exact />
-          <PrivateRoute path="/home" component={Dashboard}/>
-          <PrivateRoute path="/update-profile" component={UpdateProfile}/>
-          <Route pash="/forgot-password" component={ForgotPassword}/>
+          <PublicRoute path="/" component={Home} exact />
+          <PrivateRoute path="/home" component={EditCourses} exact/>
+          <PrivateRoute path="/update-profile" component={UpdateProfile} exact/>
+          <PublicRoute path="/forgot-password" component={ForgotPassword} exact/>
+          <PublicRoute component={Home} />
         </Switch>
       </AuthProvider>
     </Router>
