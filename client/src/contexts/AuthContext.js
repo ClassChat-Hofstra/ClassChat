@@ -1,5 +1,6 @@
 import React, { useContext, useState, useEffect } from "react";
 import { auth } from "../firebase";
+import axios from "axios";
 
 const AuthContext = React.createContext();
 
@@ -11,8 +12,15 @@ export function AuthProvider({ children }) {
   const [currentUser, setCurrentUser] = useState();
   const [loading, setLoading] = useState(true);
 
-  function signup(email, password) {
-    auth.createUserWithEmailAndPassword(email, password);
+  function signup(email, password, name) {
+    return auth.createUserWithEmailAndPassword(email, password).then(() => {
+      axios
+        .post("/auth/register", { email: email, name: name })
+        .then(console.log("Success"))
+        .catch((err) => {
+          console.log(err);
+        });
+    });
   }
 
   function login(email, password) {
@@ -24,16 +32,16 @@ export function AuthProvider({ children }) {
   }
 
   function resetPassword(email) {
-    return auth.sendPasswordResetEmail(email)
+    return auth.sendPasswordResetEmail(email);
   }
 
   useEffect(() => {
-    const unsubscribe = auth.onAuthStateChanged(user => {
-      setCurrentUser(user)
-      setLoading(false)
-    })
+    const unsubscribe = auth.onAuthStateChanged((user) => {
+      setCurrentUser(user);
+      setLoading(false);
+    });
 
-    return unsubscribe
+    return unsubscribe;
   }, []);
 
   const value = {
@@ -41,7 +49,7 @@ export function AuthProvider({ children }) {
     signup,
     login,
     logout,
-    resetPassword
+    resetPassword,
   };
 
   return (

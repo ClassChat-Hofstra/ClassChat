@@ -1,5 +1,5 @@
 import React from "react";
-import Home from "./home/Home";
+import Home from './home/home';
 import RegisterForm from "./home/RegisterForm";
 import { Route, Switch, BrowserRouter as Router } from "react-router-dom";
 import { AuthProvider } from "../contexts/AuthContext";
