@@ -4,6 +4,7 @@ const mongoose = require("mongoose");
 const bodyParser = require("body-parser");
 
 const auth = require("./routes/auth");
+const courses = require("./routes/courses");
 
 const app = express();
 const PORT = process.env.PORT || 5000;
@@ -21,6 +22,7 @@ mongoose.connect(process.env.MONGO_URI, {
     .catch(err => console.log(err));
 
 app.use("/auth", auth);
+app.use("/courses", courses);
 
 app.listen(PORT, err => {
     if (err) {

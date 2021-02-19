@@ -1,8 +1,10 @@
 import ManageCoursesReducer from './ManageCourses';
-import {combineReducers} from 'redux';
+import {
+    combineReducers
+} from 'redux';
 
 const allReducers = combineReducers({
-    ManageCoursesReducer
+    courseRoster: ManageCoursesReducer
 })
 
 export default allReducers;

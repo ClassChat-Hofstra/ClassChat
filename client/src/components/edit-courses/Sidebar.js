@@ -1,46 +1,28 @@
-import React from 'react'
-import { Col, ListGroup, ListGroupItem, Nav } from 'react-bootstrap'
+import React from "react";
+import SidebarItem from "./SidebarItem";
+import { Col, ListGroup, ListGroupItem, Nav } from "react-bootstrap";
+import { useSelector } from "react-redux";
 
-export default function sidebar() {
+export default function Sidebar() {
+  const courses = useSelector((state) => state.courseRoster);
+
+  function createSidebar(course) {
     return (
-        <Col className="col-md-2 d-none d-md-block bg-light sidebar">
-            <Nav>
-            <div class="sidebar-sticky">
-            <ul class="nav flex-column">
-              <li class="nav-item">
-                <a class="nav-link" href="#">
-                  <span data-feather="home"></span>
-                  Course 1
-                </a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="#">
-                  <span data-feather="file"></span>
-                  Course 2
-                </a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="#">
-                  <span data-feather="shopping-cart"></span>
-                  Course 3
-                </a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="#">
-                  <span data-feather="users"></span>
-                  Course 4
-                </a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="#">
-                  <span data-feather="bar-chart-2"></span>
-                  Course 5
-                </a>
-              </li>
-            </ul>
+      <SidebarItem
+        key={course._id}
+        crn={course.crn}
+        title={course.course_title}
+      />
+    );
+  }
 
-          </div>
-            </Nav>
-        </Col>
-    )
+  return (
+    <Col className="col-md-2 d-none d-md-block bg-light sidebar">
+      <Nav>
+        <div class="sidebar-sticky" style={{ width: "100%" }}>
+          <ul class="nav flex-column">{courses.map(createSidebar)}</ul>
+        </div>
+      </Nav>
+    </Col>
+  );
 }

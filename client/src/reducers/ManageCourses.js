@@ -1,13 +1,14 @@
 import React from 'react';
 
 const ManageCoursesReducer = (state = [], action) => {
-    switch(action.type) {
+    switch (action.type) {
         case "ADD_COURSE":
-            return state.push(action.payload)
+            return [...state, action.payload];
+        case "REMOVE_COURSE":
+            return state.filter(course => course.crn !== action.payload);
         default:
             return state;
     }
 }
 
 export default ManageCoursesReducer;
-

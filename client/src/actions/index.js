@@ -4,3 +4,9 @@ export const addCourse = (courseObject) => {
         payload: courseObject
     }
 }
+export const removeCourse = (crn) => {
+    return {
+        type: "REMOVE_COURSE",
+        payload: crn
+    }
+}
