@@ -21,8 +21,9 @@ mongoose.connect(process.env.MONGO_URI, {
     .then(() => console.log("MongoDB successfully connected"))
     .catch(err => console.log(err));
 
-app.use("/auth", auth);
 app.use("/courses", courses);
+app.use("/auth", auth);
+
 
 app.listen(PORT, err => {
     if (err) {
