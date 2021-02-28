@@ -1,6 +1,8 @@
 import React, { useContext, useState, useEffect } from "react";
 import { auth } from "../firebase";
 import axios from "axios";
+import { loadCourses } from "../actions/index";
+import { useDispatch } from "react-redux";
 
 const AuthContext = React.createContext();
 
@@ -9,6 +11,8 @@ export function useAuth() {
 }
 
 export function AuthProvider({ children }) {
+  const dispatch = useDispatch();
+
   const [currentUser, setCurrentUser] = useState();
   const [loading, setLoading] = useState(true);
 
@@ -16,7 +20,6 @@ export function AuthProvider({ children }) {
     return auth.createUserWithEmailAndPassword(email, password).then(() => {
       axios
         .post("/auth/register", { email: email, name: name })
-        .then(console.log("Success"))
         .catch((err) => {
           console.log(err);
         });

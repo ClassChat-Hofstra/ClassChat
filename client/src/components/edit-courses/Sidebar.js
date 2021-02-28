@@ -19,8 +19,8 @@ export default function Sidebar() {
   return (
     <Col className="col-md-2 d-none d-md-block bg-light sidebar">
       <Nav>
-        <div class="sidebar-sticky" style={{ width: "100%" }}>
-          <ul class="nav flex-column">{courses.map(createSidebar)}</ul>
+        <div className="sidebar-sticky" style={{ width: "100%" }}>
+          <ul className="nav flex-column">{courses.map(createSidebar)}</ul>
         </div>
       </Nav>
     </Col>

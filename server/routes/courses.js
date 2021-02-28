@@ -13,10 +13,10 @@ router.get("/allcourses", (req, res) => {
 
 });
 
-router.get("/currentcourses", (req, res) => {
+router.post("/currentcourses", (req, res) => {
     User.findOne({
         email: req.body.email
-    }, function (user, err) {
+    }, function (err, user) {
         if (err) {
             console.log(err);
         } else {
@@ -35,10 +35,24 @@ router.post("/addcourse", (req, res) => {
     }, function (err) {
         if (err) {
             console.log(err);
-        } else {
-            console.log("No Error");
         }
     });
 });
+
+router.post("/removecourse", (req, res) => {
+    User.updateOne({
+        email: req.body.email
+    }, {
+        $pull: {
+            courses: {
+                crn: req.body.crn
+            }
+        }
+    }, function (err, res) {
+        if (err) {
+            console.log(err);
+        }
+    })
+})
 
 module.exports = router;

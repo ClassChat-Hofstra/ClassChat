@@ -10,7 +10,6 @@ router.post("/register", (req) => {
         name: req.body.name,
         email: req.body.email
     });
-    console.log(req.body);
     newUser.save();
 });
 

@@ -28,7 +28,13 @@ export default function Course(props) {
 
   function handleRemove(e) {
     e.preventDefault();
-    dispatch(removeCourse(props.course_object.crn));
+    axios
+      .post("/courses/removecourse", {
+        email: currentUser.email,
+        crn: props.course_object.crn,
+      })
+      .then(dispatch(removeCourse(props.course_object.crn)))
+      .catch((e) => console.log(e));
   }
 
   return (
