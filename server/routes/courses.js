@@ -3,6 +3,8 @@ const express = require('express');
 const Course = require("../models/Course");
 const User = require("../models/User");
 
+const mongoose_fuzzy_searching = require('mongoose-fuzzy-searching');
+
 let router = express.Router();
 
 router.get("/allcourses", (req, res) => {
@@ -53,6 +55,15 @@ router.post("/removecourse", (req, res) => {
             console.log(err);
         }
     })
+})
+
+router.post("/searchcourses", async (req, res) => {
+    try {
+        const courseResults = await Course.fuzzySearch(req.body.query);
+        res.send(courseResults);
+    } catch (e) {
+        console.log(e);
+    }
 })
 
 module.exports = router;

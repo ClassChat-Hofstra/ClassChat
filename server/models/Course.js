@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+const mongoose_fuzzy_searching = require('mongoose-fuzzy-searching');
 
 const Schema = mongoose.Schema;
 
@@ -24,5 +25,9 @@ const CourseSchema = new Schema({
         required: true
     }
 });
+
+CourseSchema.plugin(mongoose_fuzzy_searching, {
+    fields: ['crn', 'subject', 'course_number', 'course_section', 'course_title']
+})
 
 module.exports = Course = mongoose.model("course", CourseSchema);
