@@ -10,3 +10,9 @@ export const removeCourse = (crn) => {
         payload: crn
     }
 }
+export const loadCourses = (courseList) => {
+    return {
+        type: "LOAD_COURSES",
+        payload: courseList
+    }
+}

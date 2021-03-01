@@ -6,6 +6,8 @@ const ManageCoursesReducer = (state = [], action) => {
             return [...state, action.payload];
         case "REMOVE_COURSE":
             return state.filter(course => course.crn !== action.payload);
+        case "LOAD_COURSES":
+            return action.payload;
         default:
             return state;
     }

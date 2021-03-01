@@ -1,9 +1,12 @@
+import axios from "axios";
 import React, { useState } from "react";
 import { Card } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import { addCourse, removeCourse } from "../../actions";
+import { useAuth } from "../../contexts/AuthContext";
 
 export default function Course(props) {
+  const { currentUser } = useAuth();
   const courses = useSelector((state) => state.courseRoster);
 
   const courseAdded = courses.some(
@@ -14,13 +17,24 @@ export default function Course(props) {
 
   function handleAdd(e) {
     e.preventDefault();
-    console.log(props.course_object);
-    dispatch(addCourse(props.course_object));
+    axios
+      .post("/courses/addcourse", {
+        email: currentUser.email,
+        course: props.course_object,
+      })
+      .then(dispatch(addCourse(props.course_object)))
+      .catch((e) => console.log(e));
   }
 
   function handleRemove(e) {
     e.preventDefault();
-    dispatch(removeCourse(props.course_object.crn));
+    axios
+      .post("/courses/removecourse", {
+        email: currentUser.email,
+        crn: props.course_object.crn,
+      })
+      .then(dispatch(removeCourse(props.course_object.crn)))
+      .catch((e) => console.log(e));
   }
 
   return (

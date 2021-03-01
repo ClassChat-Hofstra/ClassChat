@@ -16,13 +16,15 @@ app.use(bodyParser.urlencoded({
 
 mongoose.connect(process.env.MONGO_URI, {
         useNewUrlParser: true,
-        useUnifiedTopology: true
+        useUnifiedTopology: true,
+        useCreateIndex: true
     })
     .then(() => console.log("MongoDB successfully connected"))
     .catch(err => console.log(err));
 
-app.use("/auth", auth);
 app.use("/courses", courses);
+app.use("/auth", auth);
+
 
 app.listen(PORT, err => {
     if (err) {

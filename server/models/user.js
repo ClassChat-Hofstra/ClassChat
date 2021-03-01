@@ -1,6 +1,7 @@
 const mongoose = require("mongoose");
-
 const Schema = mongoose.Schema;
+
+const CourseSchema = require("./Course").model("course").schema
 
 const UserSchema = new Schema({
   name: {
@@ -14,7 +15,8 @@ const UserSchema = new Schema({
   date: {
     type: Date,
     default: Date.now
-  }
+  },
+  courses: [CourseSchema]
 });
 
 module.exports = User = mongoose.model("users", UserSchema);
