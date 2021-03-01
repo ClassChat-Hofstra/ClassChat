@@ -26,14 +26,6 @@ export default function SidebarItem(props) {
     return str.length > n ? str.substr(0, n - 1) : str;
   }
 
-  let truncCourseString = truncate(
-    props.course.subject +
-      "-" +
-      props.course.course_number +
-      ":" +
-      props.course.course_title,
-    35
-  );
   //{props.course.subject}-{props.course.course_number}:{props.course.course_title}
   return (
     <div>
