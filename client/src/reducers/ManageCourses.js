@@ -1,5 +1,3 @@
-import React from 'react';
-
 const ManageCoursesReducer = (state = [], action) => {
     switch (action.type) {
         case "ADD_COURSE":

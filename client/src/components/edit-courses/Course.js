@@ -41,9 +41,11 @@ export default function Course(props) {
     <div>
       <Card style={{ width: "18rem", marginBottom: "25px" }}>
         <Card.Body>
-          <Card.Title>{props.title}</Card.Title>
+          <Card.Title>
+            {props.subject}-{props.course_number}: {props.title}
+          </Card.Title>
           <Card.Subtitle className="mb-2 text-muted">
-            Section: {props.course_section}
+            Section: {props.course_section} | CRN: {props.crn}
           </Card.Subtitle>
           <Card.Text>{props.course_title}</Card.Text>
           {courseAdded ? (

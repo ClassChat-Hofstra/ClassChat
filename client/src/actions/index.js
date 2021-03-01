@@ -16,3 +16,10 @@ export const loadCourses = (courseList) => {
         payload: courseList
     }
 }
+
+export const loadInitialCourses = (courseList) => {
+    return {
+        type: "LOAD_INITIAL_COURSES",
+        payload: courseList
+    }
+}

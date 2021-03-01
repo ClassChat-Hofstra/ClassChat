@@ -7,13 +7,7 @@ export default function Sidebar() {
   const courses = useSelector((state) => state.courseRoster);
 
   function createSidebar(course) {
-    return (
-      <SidebarItem
-        key={course._id}
-        crn={course.crn}
-        title={course.course_title}
-      />
-    );
+    return <SidebarItem key={course._id} course={course} />;
   }
 
   return (

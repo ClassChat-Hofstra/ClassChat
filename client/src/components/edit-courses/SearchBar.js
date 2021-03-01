@@ -1,8 +1,12 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import { useHistory } from "react-router-dom";
 import { useAuth } from "../../contexts/AuthContext";
+import axios from "axios";
+import { useDispatch } from "react-redux";
+import { loadInitialCourses } from "../../actions";
 
 export default function SearchBar() {
+  const dispatch = useDispatch();
   const [error, setError] = useState("");
   const { currentUser, logout } = useAuth();
   const history = useHistory();
@@ -18,6 +22,16 @@ export default function SearchBar() {
     }
   }
 
+  const searchRef = useRef();
+
+  async function handleSearch() {
+    await axios
+      .post("/courses/searchcourses", { query: searchRef.current.value })
+      .then((res) => {
+        dispatch(loadInitialCourses(res.data));
+      });
+  }
+
   return (
     <nav className="navbar navbar-dark fixed-top bg-dark flex-md-nowrap p-0 shadow">
       <a className="navbar-brand col-sm-3 col-md-2 mr-0" href="/home">
@@ -28,6 +42,8 @@ export default function SearchBar() {
         type="text"
         placeholder="Search"
         aria-label="Search"
+        ref={searchRef}
+        onChange={handleSearch}
       ></input>
       <ul className="navbar-nav px-3">
         <li className="nav-item text-nowrap">

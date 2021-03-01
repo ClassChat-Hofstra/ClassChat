@@ -4,8 +4,8 @@ import Course from "./Course";
 import axios from "axios";
 import getCourseData from "../../CourseData";
 import { useAuth } from "../../contexts/AuthContext";
-import { useDispatch } from "react-redux";
-import { loadCourses } from "../../actions";
+import { useDispatch, useSelector } from "react-redux";
+import { loadCourses, loadInitialCourses } from "../../actions";
 
 function createCard(courseData) {
   return (
@@ -14,7 +14,7 @@ function createCard(courseData) {
       crn={courseData.crn}
       title={courseData.course_title}
       subject={courseData.subject}
-      course_Number={courseData.course_number}
+      course_number={courseData.course_number}
       course_section={courseData.course_section}
       course_object={courseData}
     />
@@ -23,12 +23,17 @@ function createCard(courseData) {
 
 export default function CourseResult() {
   const { currentUser } = useAuth();
-  const [courseList, setCourseList] = useState([]);
+  //const [courseList, setCourseList] = useState([]);
+  const courseList = useSelector((state) => state.courseList);
   const dispatch = useDispatch();
 
   useEffect(() => {
+    // getCourseData().then((response) => {
+    //   setCourseList(response);
+    // });
+
     getCourseData().then((response) => {
-      setCourseList(response);
+      dispatch(loadInitialCourses(response));
     });
 
     axios
