@@ -7,7 +7,6 @@ import axios from "axios";
 import { useAuth } from "../../contexts/AuthContext";
 
 export default function SidebarItem(props) {
-  console.log(props);
   const dispatch = useDispatch();
   const { currentUser } = useAuth();
 
@@ -22,11 +21,6 @@ export default function SidebarItem(props) {
       .catch((e) => console.log(e));
   }
 
-  function truncate(str, n) {
-    return str.length > n ? str.substr(0, n - 1) : str;
-  }
-
-  //{props.course.subject}-{props.course.course_number}:{props.course.course_title}
   return (
     <div>
       <li className="nav-item">
