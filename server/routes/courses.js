@@ -29,32 +29,28 @@ router.post("/currentcourses", (req, res) => {
 
 router.post("/addcourse", (req, res) => {
     User.updateOne({
-        email: req.body.email
-    }, {
-        $push: {
-            courses: req.body.course
-        }
-    }, function (err) {
-        if (err) {
-            console.log(err);
-        }
-    });
+            email: req.body.email
+        }, {
+            $push: {
+                courses: req.body.course
+            }
+        })
+        .then(res.sendStatus(200))
+        .catch((e) => console.log(e));
 });
 
 router.post("/removecourse", (req, res) => {
     User.updateOne({
-        email: req.body.email
-    }, {
-        $pull: {
-            courses: {
-                crn: req.body.crn
+            email: req.body.email
+        }, {
+            $pull: {
+                courses: {
+                    crn: req.body.crn
+                }
             }
-        }
-    }, function (err, res) {
-        if (err) {
-            console.log(err);
-        }
-    })
+        })
+        .then(res.sendStatus(200))
+        .catch((e) => console.log(e));
 })
 
 router.post("/searchcourses", async (req, res) => {

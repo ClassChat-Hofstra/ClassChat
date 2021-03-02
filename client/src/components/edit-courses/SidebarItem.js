@@ -29,15 +29,17 @@ export default function SidebarItem(props) {
             <col style={{ width: "80%" }} />
             <col style={{ width: "20%" }} />
           </colgroup>
-          <tr>
-            <td data-feather="home">
-              {props.course.subject}-{props.course.course_number}:{" "}
-              {props.course.course_title}
-            </td>
-            <td style={{ color: "red", textAlign: "right" }}>
-              <FontAwesomeIcon onClick={onClickRemove} icon={faMinusCircle} />
-            </td>
-          </tr>
+          <tbody>
+            <tr>
+              <td data-feather="home">
+                {props.course.subject}-{props.course.course_number}:{" "}
+                {props.course.course_title}
+              </td>
+              <td style={{ color: "red", textAlign: "right" }}>
+                <FontAwesomeIcon onClick={onClickRemove} icon={faMinusCircle} />
+              </td>
+            </tr>
+          </tbody>
         </table>
       </li>
       <hr />
