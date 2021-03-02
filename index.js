@@ -2,6 +2,7 @@ require('dotenv').config();
 const express = require("express");
 const mongoose = require("mongoose");
 const bodyParser = require("body-parser");
+const path = require("path");
 
 const auth = require("./routes/auth");
 const courses = require("./routes/courses");
@@ -24,6 +25,10 @@ mongoose.connect(process.env.MONGO_URI, {
 
 app.use("/courses", courses);
 app.use("/auth", auth);
+
+app.get("*", (req, res) => {
+    res.sendFile(path.join(__dirname, "client", "build", "index.html"));
+});
 
 
 app.listen(PORT, err => {
