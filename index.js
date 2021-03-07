@@ -10,6 +10,7 @@ const courses = require("./routes/courses");
 const app = express();
 const PORT = process.env.PORT || 5000;
 
+app.use(express.static(path.join(__dirname, "client", "build")))
 app.use(express.json());
 app.use(bodyParser.urlencoded({
     extended: true
