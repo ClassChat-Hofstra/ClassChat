@@ -1,11 +1,18 @@
-import React, { Component, useState } from "react";
-import PropTypes from "prop-types";
-import { connect } from "react-redux";
+import React, { Component, useState, useEffect } from "react";
 import { Link, useHistory } from "react-router-dom";
 import { useAuth } from "../../contexts/AuthContext";
-import { Button, Card, Alert } from "react-bootstrap";
+import { Button, Card, Alert, ResponsiveEmbed } from "react-bootstrap";
+import { useDispatch, useSelector } from "react-redux";
+import { Redirect, Route } from "react-router-dom";
+import { loadCourses } from "../../actions";
+import axios from "axios";
 
 function Dashboard(props) {
+  const dispatch = useDispatch();
+  const courseRoster = useSelector((state) => state.courseRoster);
+
+  const [hasNoCourses, setHasNoCourses] = useState(false);
+
   const [error, setError] = useState("");
   const { currentUser, logout } = useAuth();
   const history = useHistory();
@@ -21,8 +28,35 @@ function Dashboard(props) {
     }
   }
 
+  async function loadCourses() {
+    const response = await axios.post("/courses/currentcourses", {
+      email: currentUser.email,
+    });
+
+    return response.data;
+  }
+
+  // useEffect(() => {
+  //   dispatch(loadCourses(currentUser.email));
+  // }, []);
+
+  useEffect(() => {
+    loadCourses().then((data) => {
+      if (data.length < 1) {
+        setHasNoCourses(true);
+      }
+    });
+  }, []);
+
+  useEffect(() => {
+    console.log("Value: " + hasNoCourses);
+    if (hasNoCourses === true) {
+      history.replace("/edit-courses");
+    }
+  }, [hasNoCourses, history]);
+
   return (
-    <>
+    <div>
       <Card style={{ width: "18rem", margin: "auto" }}>
         <Card.Body>
           <h2 className="text-center mb-4">Profile</h2>
@@ -38,10 +72,8 @@ function Dashboard(props) {
           Log Out
         </Button>
       </div>
-    </>
+    </div>
   );
 }
 
 export default Dashboard;
-
-

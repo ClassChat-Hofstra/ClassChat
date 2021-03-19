@@ -6,6 +6,10 @@ import getCourseData from "../../CourseData";
 import { useAuth } from "../../contexts/AuthContext";
 import { useDispatch, useSelector } from "react-redux";
 import { loadCourses, loadInitialCourses } from "../../actions";
+import Fab from "@material-ui/core/Fab";
+import DoneIcon from "@material-ui/icons/Done";
+import { makeStyles } from "@material-ui/core/styles";
+import { Link, Redirect } from "react-router-dom";
 
 function createCard(courseData) {
   return (
@@ -21,34 +25,63 @@ function createCard(courseData) {
   );
 }
 
+const useStyles = makeStyles((theme) => ({
+  continueButton: {
+    color: "white",
+    backgroundColor: "#1fd1f9",
+    backgroundImage: "linear-gradient(315deg, #1fd1f9 0%, #b621fe 74%)",
+    position: "fixed",
+    right: "5%",
+    bottom: "5%",
+  },
+  extendedIcon: {
+    marginRight: theme.spacing(1),
+  },
+}));
+
 export default function CourseResult() {
+  const classes = useStyles();
   const { currentUser } = useAuth();
-  //const [courseList, setCourseList] = useState([]);
+
   const courseList = useSelector((state) => state.courseList);
+  const courseRoster = useSelector((state) => state.courseRoster);
+
+  const [continueButton, setContinueVisible] = useState(false);
+
   const dispatch = useDispatch();
 
   useEffect(() => {
-    // getCourseData().then((response) => {
-    //   setCourseList(response);
-    // });
-
     getCourseData().then((response) => {
       dispatch(loadInitialCourses(response));
     });
 
-    axios
-      .post("/courses/currentcourses", { email: currentUser.email })
-      .then((response) => {
-        dispatch(loadCourses(response.data));
-      })
-      .catch((error) => console.log(error));
-  }, [currentUser.email, dispatch]);
+    dispatch(loadCourses(currentUser.email));
+  }, []);
+
+  useEffect(() => {
+    if (courseRoster.length > 0) {
+      setContinueVisible(true);
+    } else {
+      setContinueVisible(false);
+    }
+  }, [courseRoster]);
 
   return (
-    <div role="main" className="col-md-9 ml-sm-auto col-lg-10 px-4">
-      <CardDeck style={{ marginRight: "-40px" }}>
-        {courseList.map(createCard)}
-      </CardDeck>
+    <div>
+      <div role="main" className="col-md-9 ml-sm-auto col-lg-10 px-4">
+        <CardDeck style={{ marginRight: "-40px" }}>
+          {courseList.map(createCard)}
+        </CardDeck>
+      </div>
+      {continueButton && (
+        <Link to="/home">
+          {" "}
+          <Fab variant="extended" className={classes.continueButton}>
+            <DoneIcon className={classes.extendedIcon} />
+            Continue
+          </Fab>
+        </Link>
+      )}
     </div>
   );
 }
