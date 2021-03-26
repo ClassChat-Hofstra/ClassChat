@@ -18,13 +18,19 @@ function Navigation() {
 
   const [editModalOpen, setEditModalOpen] = useState(false);
 
-  const editModalToggle = () => setEditModalOpen(!editModalOpen);
+  const editModalToggle = (e) => {
+    e.preventDefault();
+    setEditModalOpen(!editModalOpen);
+  };
 
   const [settingsModalOpen, setSettingsModalOpen] = useState(false);
 
-  const settingsModalToggle = () => setSettingsModalOpen(!settingsModalOpen);
+  const settingsModalToggle = (e) => {
+    e.preventDefault();
+    setSettingsModalOpen(!settingsModalOpen);
+  };
 
-  const { currentUser, logout } = useAuth();
+  const { logout } = useAuth();
 
   const history = useHistory();
 
@@ -97,7 +103,7 @@ function Navigation() {
       <div className="nav-group">
         <ul>
           <li>
-            <a href="/#/" className="logo">
+            <a href="/home" className="logo">
               <Logo />
             </a>
           </li>
@@ -109,17 +115,17 @@ function Navigation() {
             />
           ))}
           <li className="brackets">
-            <a href="/#/" onClick={editModalToggle}>
+            <a href="/home" onClick={editModalToggle}>
               <i className="ti ti-pencil"></i>
             </a>
           </li>
           <li>
-            <a href="/#/" onClick={settingsModalToggle}>
+            <a href="/home" onClick={settingsModalToggle}>
               <i className="ti ti-settings"></i>
             </a>
           </li>
           <li>
-            <a href="/#/" onClick={handleLogout}>
+            <a href="/" onClick={handleLogout}>
               <i className="ti ti-power-off"></i>
             </a>
           </li>
