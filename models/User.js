@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
-const CourseSchema = require("./Course").model("course").schema
+//const CourseSchema = require("./Course").model("course").schema
 
 const UserSchema = new Schema({
   name: {
@@ -16,7 +16,10 @@ const UserSchema = new Schema({
     type: Date,
     default: Date.now
   },
-  courses: [CourseSchema]
+  courses: [{
+    type: Schema.Types.ObjectId,
+    ref: "course"
+  }]
 });
 
-module.exports = User = mongoose.model("users", UserSchema);
+module.exports = User = mongoose.model("user", UserSchema);

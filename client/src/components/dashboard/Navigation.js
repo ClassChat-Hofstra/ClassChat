@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Link, useHistory } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import { ReactComponent as Logo } from "../../assets/img/logo.svg";
 import { Tooltip } from "reactstrap";
 import { sidebarAction } from "../../actions";

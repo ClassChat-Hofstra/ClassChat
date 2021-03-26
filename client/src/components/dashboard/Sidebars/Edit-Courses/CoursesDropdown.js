@@ -33,7 +33,7 @@ const CoursesDropdown = (props) => {
     axios
       .post("/courses/removecourse", {
         email: currentUser.email,
-        crn: props.course.crn,
+        course: props.course,
       })
       .then(dispatch(removeCourse(props.course.crn)))
       .catch((e) => console.log(e));

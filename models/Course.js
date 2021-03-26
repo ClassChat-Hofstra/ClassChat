@@ -3,6 +3,8 @@ const mongoose_fuzzy_searching = require('mongoose-fuzzy-searching');
 
 const Schema = mongoose.Schema;
 
+//const UserSchema = require("./User").model("users").schema;
+
 const CourseSchema = new Schema({
     crn: {
         type: String,
@@ -23,7 +25,11 @@ const CourseSchema = new Schema({
     course_title: {
         type: String,
         required: true
-    }
+    },
+    users: [{
+        type: Schema.Types.ObjectId,
+        ref: "user"
+    }]
 });
 
 CourseSchema.plugin(mongoose_fuzzy_searching, {
