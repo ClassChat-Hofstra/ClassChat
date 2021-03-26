@@ -3,7 +3,7 @@ import Home from "./home/home";
 import RegisterForm from "./home/RegisterForm";
 import { Route, Switch, BrowserRouter as Router } from "react-router-dom";
 import { AuthProvider } from "../contexts/AuthContext";
-import Dashboard from "./dashboard/Dashboard";
+import Dashboard from "./dashboard/Layout";
 import PublicRoute from "./PublicRoute";
 import PrivateRoute from "./PrivateRoute";
 import ForgotPassword from "./ForgotPassword";

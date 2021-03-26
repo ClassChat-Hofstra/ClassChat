@@ -5,6 +5,9 @@ import { Provider } from "react-redux";
 import "bootstrap/dist/css/bootstrap.min.css";
 import allReducers from "./reducers";
 import thunk from "redux-thunk";
+import "font-awesome/css/font-awesome.min.css";
+import "@icon/themify-icons/themify-icons.css";
+import "./assets/scss/Index.scss";
 
 // test
 import App from "./components/App";

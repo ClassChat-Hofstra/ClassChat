@@ -55,3 +55,28 @@ export const loadInitialCourses = (courseList) => {
         payload: courseList
     }
 }
+
+export const sidebarAction = (name) => ({
+    type: 'SIDEBAR',
+    name
+});
+
+export const mobileSidebarAction = (status) => ({
+    type: 'MOBILE_SIDEBAR',
+    status
+});
+
+export const profileAction = (status) => ({
+    type: 'PROFILE',
+    status
+});
+
+export const mobileProfileAction = (status) => ({
+    type: 'MOBILE_PROFILE',
+    status
+});
+
+export const selectedChatAction = (chat) => ({
+    type: 'SELECTED_CHAT',
+    chat
+});
