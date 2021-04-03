@@ -49,9 +49,9 @@ function ChatFooter(props) {
           <Button color="light" className="btn-floating">
             <i className="fa fa-paperclip"></i>
           </Button>
-          <Button color="light" className="btn-floating">
+          {/* <Button color="light" className="btn-floating">
             <i className="fa fa-microphone"></i>
-          </Button>
+          </Button> */}
           <Button color="primary" className="btn-floating">
             <i className="fa fa-send"></i>
           </Button>

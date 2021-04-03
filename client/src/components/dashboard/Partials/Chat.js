@@ -23,6 +23,9 @@ function Chat() {
   const dispatch = useDispatch();
 
   const handleSubmit = (newValue) => {
+    if (newValue.body.length === 0) {
+      return;
+    }
     console.log(newValue);
     socket.emit("send-post", {
       email: newValue.sender.email,

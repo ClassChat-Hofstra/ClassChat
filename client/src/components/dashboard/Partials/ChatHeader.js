@@ -27,7 +27,10 @@ function ChatHeader(props) {
       <div className="chat-header-user">
         {props.selectedChat.avatar}
         <div>
-          <h5>{props.selectedChat.name}</h5>
+          <h5>
+            {props.selectedChat.subject}-{props.selectedChat.course_number}:{" "}
+            {props.selectedChat.course_title}
+          </h5>
           <small className="text-muted">
             <i>Online</i>
           </small>
