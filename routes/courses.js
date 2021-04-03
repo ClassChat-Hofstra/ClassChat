@@ -20,14 +20,34 @@ router.post("/currentcourses", (req, res) => {
     User.findOne({
             email: req.body.email
         })
-        .populate("courses")
-        .then(user => {
-            res.send(user.courses);
+        .populate({
+            path: "courses",
+            populate: {
+                path: "messages.sender",
+                // populate: {
+                //     path: "sender"
+                // }
+            }
         })
-        .catch(error => {
-            console.log(error);
+        .exec(function (err, user) {
+            if (err) {
+                console.log(err);
+            } else {
+                res.send(user.courses);
+            }
         })
+})
 
+router.post("/onecourse", (req, res) => {
+    Course.findOne({
+        crn: req.body.crn
+    }, function (err, course) {
+        if (err) {
+            console.log(err);
+        } else {
+            res.send(course.messages);
+        }
+    })
 })
 
 router.post("/addcourse", (req, res) => {
@@ -41,16 +61,28 @@ router.post("/addcourse", (req, res) => {
             new: true
         })
         .then((user) => {
-            Course.updateOne({
+            Course.findOneAndUpdate({
                     crn: req.body.course.crn
                 }, {
                     $push: {
                         users: user._id
                     }
+                }, {
+                    new: true
                 })
-                .catch((e) => console.log(e));
-
-            res.sendStatus(200);
+                .populate({
+                    path: "messages.sender"
+                })
+                .exec(function (err, course) {
+                    if (err) {
+                        console.log(err);
+                    } else {
+                        console.log('%j', course);
+                        res.send(course);
+                    }
+                })
+            //.catch((e) => console.log(e));
+            //res.sendStatus(200);
         })
         .catch((e) => console.log(e));
 });

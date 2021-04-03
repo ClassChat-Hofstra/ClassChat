@@ -3,6 +3,7 @@ const mongoose_fuzzy_searching = require('mongoose-fuzzy-searching');
 
 const Schema = mongoose.Schema;
 
+const MessageSchema = require("./Message").model("message").schema
 //const UserSchema = require("./User").model("users").schema;
 
 const CourseSchema = new Schema({
@@ -29,7 +30,8 @@ const CourseSchema = new Schema({
     users: [{
         type: Schema.Types.ObjectId,
         ref: "user"
-    }]
+    }],
+    messages: [MessageSchema]
 });
 
 CourseSchema.plugin(mongoose_fuzzy_searching, {

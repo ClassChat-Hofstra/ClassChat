@@ -1,4 +1,5 @@
 import axios from "axios"
+import io from "socket.io-client";
 
 export const addCourse = (courseObject) => {
     return {
@@ -12,42 +13,57 @@ export const removeCourse = (crn) => {
         payload: crn
     }
 }
-export const loadCourses = (userEmail) => {
-    // return {
-    //     type: "LOAD_COURSES",
-    //     payload: courseList
-    // }
-    console.log(userEmail);
-    const request = axios.post("/courses/currentcourses", {
-        email: userEmail
-    });
-    return (dispatch) => {
-        request.then(({
-            data
-        }) => {
-            console.log(data);
-            dispatch({
-                type: "LOAD_COURSES",
-                payload: data
-            })
-        })
+
+export const updateMessages = (message, crn) => {
+    return {
+        type: "UPDATE_MESSAGES",
+        payload: {
+            message,
+            crn
+        }
     }
 }
 
-// export const loadCourses = (userEmail) => async dispatch => {
-//     try {
-//         const request = await axios.post("/courses/currentcourses", {
-//             email: userEmail
-//         });
-
-//         return request.data;
-
-//     } catch (err) {
-//         console.log(err);
+// export const loadCourses = (userEmail) => {
+//     // return {
+//     //     type: "LOAD_COURSES",
+//     //     payload: courseList
+//     // }
+//     const request = axios.post("/courses/currentcourses", {
+//         email: userEmail
+//     });
+//     return (dispatch) => {
+//         request.then(({
+//             data
+//         }) => {
+//             dispatch({
+//                 type: "LOAD_COURSES",
+//                 payload: data
+//             })
+//         })
 //     }
-
 // }
 
+export const loadCourses = (courseList) => {
+    return {
+        type: "LOAD_COURSES",
+        payload: courseList
+    }
+
+    // export const loadCourses = (userEmail) => async dispatch => {
+    //     try {
+    //         const request = await axios.post("/courses/currentcourses", {
+    //             email: userEmail
+    //         });
+
+    //         return request.data;
+
+    //     } catch (err) {
+    //         console.log(err);
+    //     }
+
+    // }
+}
 
 export const loadInitialCourses = (courseList) => {
     return {
@@ -80,3 +96,14 @@ export const selectedChatAction = (chat) => ({
     type: 'SELECTED_CHAT',
     chat
 });
+
+export const unselectChat = () => ({
+    type: 'UNSELECT_CHAT'
+});
+
+export const setSocket = (socket) => {
+    return {
+        type: 'SET_SOCKET',
+        payload: socket
+    }
+}

@@ -8,16 +8,21 @@ import ChatsDropdown from "./ChatsDropdown";
 import { sidebarAction } from "../../../../actions";
 import { chatLists } from "./Data";
 import { mobileSidebarAction } from "../../../../actions";
-import { selectedChatAction } from "../../../../actions";
+import { selectedChatAction, loadCourses } from "../../../../actions";
+import { useAuth } from "../../../../contexts/AuthContext";
 
 function Index() {
-  useEffect(() => {
-    inputRef.current.focus();
-  });
+  // useEffect(() => {
+  //   inputRef.current.focus();
+  // });
+
+  const { currentUser } = useAuth();
 
   const dispatch = useDispatch();
 
   const inputRef = useRef();
+
+  const courseRoster = useSelector((state) => state.courseRoster);
 
   const { selectedChat } = useSelector((state) => state);
 
@@ -31,37 +36,73 @@ function Index() {
   };
 
   const chatSelectHandle = (chat) => {
-    chat.unread_messages = 0;
+    //chat.unread_messages = 0;
     dispatch(selectedChatAction(chat));
     dispatch(mobileSidebarAction(false));
   };
 
-  const ChatListView = (props) => {
-    const { chat } = props;
+  // const ChatListView = (props) => {
+  //   const { chat } = props;
 
+  //   return (
+  //     <li
+  //       className={
+  //         "list-group-item " + (chat.id === selectedChat.id ? "open-chat" : "")
+  //       }
+  //       onClick={() => chatSelectHandle(chat)}
+  //     >
+  //       {/* {chat.avatar} */}
+  //       <div className="users-list-body">
+  //         <h5>{chat.name}</h5>
+  //         {chat.text}
+  //         <div className="users-list-action action-toggle">
+  //           {chat.unread_messages ? (
+  //             <div className="new-message-count">{chat.unread_messages}</div>
+  //           ) : (
+  //             ""
+  //           )}
+  //           <ChatsDropdown />
+  //         </div>
+  //       </div>
+  //     </li>
+  //   );
+  // };
+
+  const ChatListView = (props) => {
     return (
       <li
         className={
-          "list-group-item " + (chat.id === selectedChat.id ? "open-chat" : "")
+          "list-group-item " +
+          (props.crn === selectedChat.crn ? "open-chat" : "")
         }
-        onClick={() => chatSelectHandle(chat)}
+        onClick={() => chatSelectHandle(props)}
       >
-        {chat.avatar}
+        {/* {chat.avatar} */}
         <div className="users-list-body">
-          <h5>{chat.name}</h5>
-          {chat.text}
+          <h5>
+            {props.subject}-{props.course_number}: {props.course_title}
+          </h5>
           <div className="users-list-action action-toggle">
-            {chat.unread_messages ? (
-              <div className="new-message-count">{chat.unread_messages}</div>
-            ) : (
-              ""
-            )}
             <ChatsDropdown />
           </div>
         </div>
       </li>
     );
   };
+
+  function createListItem(courseData) {
+    return (
+      <ChatListView
+        key={courseData.crn}
+        crn={courseData.crn}
+        course_title={courseData.course_title}
+        subject={courseData.subject}
+        course_number={courseData.course_number}
+        course_section={courseData.course_section}
+        messages={courseData.messages}
+      />
+    );
+  }
 
   return (
     <div className="sidebar active">
@@ -105,9 +146,7 @@ function Index() {
       <div className="sidebar-body">
         <PerfectScrollbar>
           <ul className="list-group list-group-flush">
-            {chatLists.map((chat, i) => (
-              <ChatListView chat={chat} key={i} />
-            ))}
+            {courseRoster.map(createListItem)}
           </ul>
         </PerfectScrollbar>
       </div>

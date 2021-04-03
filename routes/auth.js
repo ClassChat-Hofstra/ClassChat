@@ -13,4 +13,16 @@ router.post("/register", (req) => {
     newUser.save();
 });
 
+router.post("/currentuser", (req, res) => {
+    User.findOne({
+        email: req.body.email
+    }, function (err, user) {
+        if (err) {
+            console.log(err);
+        } else {
+            res.send(user);
+        }
+    })
+})
+
 module.exports = router;

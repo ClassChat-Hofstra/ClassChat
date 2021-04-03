@@ -5,26 +5,31 @@ import {
   DropdownMenu,
   DropdownItem,
 } from "reactstrap";
-
+import { useSelector } from "react-redux";
 import axios from "axios";
 import { useAuth } from "../../../../contexts/AuthContext";
-import { addCourse, removeCourse } from "../../../../actions";
+import { addCourse, removeCourse, unselectChat } from "../../../../actions";
 
 import { useDispatch } from "react-redux";
 
 const CoursesDropdown = (props) => {
-  //console.log(props);
   const dispatch = useDispatch();
   const { currentUser } = useAuth();
 
+  const { selectedChat } = useSelector((state) => state);
+
   function handleAdd(e) {
+    // console.log(props.course.course_objecct);
     e.preventDefault();
     axios
       .post("/courses/addcourse", {
         email: currentUser.email,
         course: props.course,
       })
-      .then(dispatch(addCourse(props.course)))
+      .then((res) => {
+        console.log(res.data);
+        dispatch(addCourse(res.data));
+      })
       .catch((e) => console.log(e));
   }
 
@@ -36,6 +41,11 @@ const CoursesDropdown = (props) => {
         course: props.course,
       })
       .then(dispatch(removeCourse(props.course.crn)))
+      .then(() => {
+        if (selectedChat.crn === props.course.crn) {
+          dispatch(unselectChat());
+        }
+      })
       .catch((e) => console.log(e));
   }
 

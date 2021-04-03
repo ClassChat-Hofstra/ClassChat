@@ -5,6 +5,7 @@ import mobileSidebarReducer from "./mobileSidebarReducer"
 import profileSidebarReducer from "./profileSidebarReducer"
 import mobileProfileSidebarReducer from "./mobileProfileSidebarReducer"
 import selectedChatReducer from "./selectedChatReducer"
+import SocketReducer from "./SocketReducer";
 
 
 import {
@@ -18,7 +19,8 @@ const allReducers = combineReducers({
     mobileSidebar: mobileSidebarReducer,
     profileSidebar: profileSidebarReducer,
     mobileProfileSidebar: mobileProfileSidebarReducer,
-    selectedChat: selectedChatReducer
+    selectedChat: selectedChatReducer,
+    socket: SocketReducer
 })
 
 export default allReducers;

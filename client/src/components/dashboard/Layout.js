@@ -8,10 +8,14 @@ import { useDispatch, useSelector } from "react-redux";
 import getCourseData from "../../CourseData";
 import { useAuth } from "../../contexts/AuthContext";
 import { loadCourses, loadInitialCourses } from "../../actions";
+import axios from "axios";
+import io from "socket.io-client";
 
 function Layout() {
   const dispatch = useDispatch();
   const { currentUser } = useAuth();
+
+  const socket = useSelector((state) => state.socket);
 
   useEffect(() => {
     document.querySelector("*").addEventListener("click", (e) => {
@@ -27,7 +31,14 @@ function Layout() {
       dispatch(loadInitialCourses(response));
     });
 
-    dispatch(loadCourses(currentUser.email));
+    axios
+      .post("/courses/currentcourses", { email: currentUser.email })
+      .then((res) => {
+        const rooms = res.data.map((course) => course.crn);
+        console.log(rooms);
+        socket.emit("subscribe", rooms);
+        dispatch(loadCourses(res.data));
+      });
   }, []);
 
   return (
