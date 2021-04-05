@@ -79,7 +79,7 @@ export default function CustomReactions() {
   }, [emojis]);
 
   return (
-    <div style={{ marginTop: "5px" }}>
+    <div style={{ marginTop: "5px", display: "inline-block" }}>
       {emojis && (
         <span style={{ fontSize: "12px" }}>
           {emojis.map((emojiObject) => (

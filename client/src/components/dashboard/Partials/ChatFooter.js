@@ -16,6 +16,7 @@ registerPlugin(FilePondPluginImageExifOrientation, FilePondPluginImagePreview);
 function ChatFooter(props) {
   const { currentUser } = useAuth();
   const [userFullName, setName] = useState();
+  const [fileVisiible, setFileVisible] = useState(false);
   const [file, setFile] = useState();
 
   useEffect(() => {
@@ -50,12 +51,14 @@ function ChatFooter(props) {
 
   return (
     <div className="chat-footer">
-      <FilePond
-        onupdatefiles={setFile}
-        allowMultiple={false}
-        dropOnPage
-        dropValidation
-      ></FilePond>
+      {fileVisiible && (
+        <FilePond
+          onupdatefiles={setFile}
+          allowMultiple={false}
+          dropOnPage
+          dropValidation
+        ></FilePond>
+      )}
       <form onSubmit={handleSubmit}>
         <Input
           type="text"
@@ -65,7 +68,13 @@ function ChatFooter(props) {
           onChange={handleChange}
         />
         <div className="form-buttons">
-          <Button color="light" className="btn-floating">
+          <Button
+            color="light"
+            className="btn-floating"
+            onClick={() =>
+              fileVisiible ? setFileVisible(false) : setFileVisible(true)
+            }
+          >
             <i className="fa fa-paperclip"></i>
           </Button>
           {/* <Button color="light" className="btn-floating">

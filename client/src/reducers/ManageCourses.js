@@ -20,6 +20,15 @@ const ManageCoursesReducer = (state = [], action) => {
                 return [...filteredState, courseToUpdate];
             }
             return state;
+        case "PIN_POST":
+            console.log(action);
+            return (state.map((course) => {
+                if (course.crn === action.payload.crn) {
+                    course.pinnedPosts.push(action.payload.messageObject);
+                }
+                return course;
+            }))
+
         default:
             return state;
     }

@@ -5,7 +5,13 @@ import PerfectScrollbar from "react-perfect-scrollbar";
 import { useSelector, useDispatch } from "react-redux";
 import { useAuth } from "../../../contexts/AuthContext";
 import { loadCourses, updateMessages } from "../../../actions";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faThumbtack } from "@fortawesome/free-solid-svg-icons";
+import PinAction from "./PinAction";
+
 import Reaction from "./CustomReactions";
+
+import "./BulletinBoard.css";
 
 function Chat() {
   const { selectedChat } = useSelector((state) => state);
@@ -98,7 +104,9 @@ function Chat() {
             <br />
             {message.file ? message.file : message.body}
           </div>
+
           <Reaction />
+          <PinAction messageObject={message} crn={selectedChat.crn} />
           <div className="message-action">
             {message.date}
             {message.type ? (

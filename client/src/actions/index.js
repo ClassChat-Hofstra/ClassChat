@@ -107,3 +107,10 @@ export const setSocket = (socket) => {
         payload: socket
     }
 }
+
+export const pinPost = (post) => {
+    return {
+        type: "PIN_POST",
+        payload: post
+    }
+}
