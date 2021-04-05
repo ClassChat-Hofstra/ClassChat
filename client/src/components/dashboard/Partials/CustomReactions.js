@@ -2,15 +2,35 @@ import React, { useState } from "react";
 import Picker from "emoji-picker-react";
 import { useEffect } from "react";
 import { useAuth } from "../../../contexts/AuthContext";
+import { updateMessageReactions, updateReactionClick } from "../../../actions";
+import { useSelector, useDispatch } from "react-redux";
 
-export default function CustomReactions() {
+export default function CustomReactions(props) {
   const [emojis, setEmojis] = useState([]);
   const [emojiHidden, setHidden] = useState(false);
+
+  const courseRoster = useSelector((state) => state.courseRoster);
+
+  const currentCourse = courseRoster.find((course) => {
+    return course.crn === props.selectedChat.crn;
+  });
+
+  // console.log(currentCourse.messages);
+
+  const currentMessage = currentCourse.messages.find((message) => {
+    return message._id === props.id;
+  });
+
+  const reactions = currentMessage.reactions;
+
+  console.log(reactions);
+
+  const dispatch = useDispatch();
 
   const { currentUser } = useAuth();
 
   const onEmojiClick = (event, emojiObject) => {
-    console.log(emojiObject);
+    // console.log(emojiObject);
     var alreadyListed = false;
     emojis.map((emojiObj) => {
       if (emojiObj.emoji === emojiObject.emoji) {
@@ -29,6 +49,16 @@ export default function CustomReactions() {
           count: 1,
         })
       );
+      var reaction = {
+        emoji: emojiObject.emoji,
+        emojiName: emojiObject.names[0],
+        senders: new Set([currentUser.email]),
+        count: 1,
+      };
+
+      dispatch(
+        updateMessageReactions(reaction, props.selectedChat.crn, props.id)
+      );
     }
     setHidden(false);
   };
@@ -43,46 +73,44 @@ export default function CustomReactions() {
   }
 
   function handleReactionClick(e) {
-    console.log(e.target.value);
+    // console.log(e.target.value);
     onReaction(e.target.value);
+    dispatch(updateReactionClick());
   }
+
+  //TODO create redux action/reducer
 
   function onReaction(emojiName) {
     setEmojis(
       emojis.filter((emojiObject) => {
-        console.log("Emoji object: " + emojiObject.emoji);
-        console.log("Emoji name: " + emojiName);
         if (emojiObject.emojiName === emojiName) {
           if (emojiObject.senders.has(currentUser.email)) {
             emojiObject.count -= 1;
-            console.log("reached");
+
             emojiObject.senders.delete(currentUser.email);
           } else {
-            console.log("reached");
             emojiObject.count += 1;
             emojiObject.senders.add(currentUser.email);
           }
         }
 
         if (emojiObject.count > 0) {
-          console.log(emojiObject.count);
           return emojiObject;
         } else {
-          console.log(emojiObject.count);
         }
       })
     );
   }
 
-  useEffect(() => {
-    console.log(emojis);
-  }, [emojis]);
+  // useEffect(() => {
+  //   console.log(emojis);
+  // }, [emojis]);
 
   return (
     <div style={{ marginTop: "5px", display: "inline-block" }}>
-      {emojis && (
+      {reactions && (
         <span style={{ fontSize: "12px" }}>
-          {emojis.map((emojiObject) => (
+          {reactions.map((emojiObject) => (
             <button
               key={emojiObject.emoji}
               onClick={handleReactionClick}

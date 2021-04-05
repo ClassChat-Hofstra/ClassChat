@@ -105,7 +105,7 @@ function Chat() {
             {message.file ? message.file : message.body}
           </div>
 
-          <Reaction />
+          <Reaction selectedChat={selectedChat} id={message._id} />
           <PinAction messageObject={message} crn={selectedChat.crn} />
           <div className="message-action">
             {message.date}

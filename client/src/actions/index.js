@@ -24,6 +24,17 @@ export const updateMessages = (message, crn) => {
     }
 }
 
+export const updateMessageReactions = (reaction, crn, id) => {
+    return {
+        type: "UPDATE_MESSAGE_REACTIONS",
+        payload: {
+            reaction,
+            crn,
+            id
+        }
+    }
+}
+
 // export const loadCourses = (userEmail) => {
 //     // return {
 //     //     type: "LOAD_COURSES",

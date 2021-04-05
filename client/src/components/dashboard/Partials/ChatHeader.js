@@ -22,8 +22,6 @@ function ChatHeader(props) {
     return course.crn === props.selectedChat.crn;
   }).pinnedPosts;
 
-  console.log(pinnedPosts);
-
   const toggle = () => setDropdownOpen((prevState) => !prevState);
 
   const profileActions = () => {
