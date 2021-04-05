@@ -1,13 +1,26 @@
 import axios from "axios";
-import React from "react";
+import React, { useEffect } from "react";
 import { useState } from "react";
 import { Button, Input } from "reactstrap";
 import WomenAvatar5 from "../../../assets/img/women_avatar5.jpg";
 import { useAuth } from "../../../contexts/AuthContext";
 
+//Filepond
+import { FilePond, registerPlugin } from "react-filepond";
+import "filepond/dist/filepond.min.css";
+import FilePondPluginImageExifOrientation from "filepond-plugin-image-exif-orientation";
+import FilePondPluginImagePreview from "filepond-plugin-image-preview";
+import "filepond-plugin-image-preview/dist/filepond-plugin-image-preview.css";
+registerPlugin(FilePondPluginImageExifOrientation, FilePondPluginImagePreview);
+
 function ChatFooter(props) {
   const { currentUser } = useAuth();
   const [userFullName, setName] = useState();
+  const [file, setFile] = useState();
+
+  useEffect(() => {
+    console.log(file);
+  }, [file]);
 
   axios
     .post("/auth/currentuser", { email: currentUser.email })
@@ -37,6 +50,12 @@ function ChatFooter(props) {
 
   return (
     <div className="chat-footer">
+      <FilePond
+        onupdatefiles={setFile}
+        allowMultiple={false}
+        dropOnPage
+        dropValidation
+      ></FilePond>
       <form onSubmit={handleSubmit}>
         <Input
           type="text"

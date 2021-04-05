@@ -5,8 +5,7 @@ import PerfectScrollbar from "react-perfect-scrollbar";
 import { useSelector, useDispatch } from "react-redux";
 import { useAuth } from "../../../contexts/AuthContext";
 import { loadCourses, updateMessages } from "../../../actions";
-import axios from "axios";
-import io from "socket.io-client";
+import Reaction from "./CustomReactions";
 
 function Chat() {
   const { selectedChat } = useSelector((state) => state);
@@ -57,7 +56,7 @@ function Chat() {
       dispatch(updateMessages(post.obj, post.crn));
     });
     return () => socket.off("recieve");
-  }, [dispatch, selectedChat.messages]);
+  }, [dispatch, selectedChat.messages, socket]);
 
   const handleChange = (newValue) => {
     setInputMsg(newValue);
@@ -99,6 +98,7 @@ function Chat() {
             <br />
             {message.file ? message.file : message.body}
           </div>
+          <Reaction />
           <div className="message-action">
             {message.date}
             {message.type ? (

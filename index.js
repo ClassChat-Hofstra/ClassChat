@@ -65,7 +65,6 @@ io.on('connection', (socket) => {
     })
 
     socket.on('send-post', (post) => {
-        console.log(post.crn);
         User.findOne({
             email: post.email
         }, function (err, user) {
