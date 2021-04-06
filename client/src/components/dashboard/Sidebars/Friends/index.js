@@ -24,7 +24,7 @@ function Index() {
   return (
     <div className="sidebar active">
       <header>
-        <span>Friends</span>
+        <span>Classmates</span>
         <ul className="list-inline">
           <li className="list-inline-item">
             <AddFriendsModal />
@@ -40,7 +40,7 @@ function Index() {
         <input
           type="text"
           className="form-control"
-          placeholder="Search friends"
+          placeholder="Search classmates"
           ref={inputRef}
         />
       </form>

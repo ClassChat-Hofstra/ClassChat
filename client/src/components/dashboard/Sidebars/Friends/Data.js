@@ -10,95 +10,95 @@ import WomenAvatar5 from "../../../../assets/img/women_avatar5.jpg";
 
 export const friendLists = [
   {
-    name: "Harrietta Souten",
-    title: "Dental Hygienist",
+    name: "Raj Bedi",
+    title: "Shares 5 mutual courses",
     avatar: (
       <figure className="avatar">
-        <img src={WomenAvatar5} className="rounded-circle" alt="avatar" />
+        <span className="avatar-title bg-success rounded-circle">RB</span>
       </figure>
     ),
   },
   {
-    name: "Aline McShee",
-    title: "Marketing Assistant",
+    name: "Aishik Mallick",
+    title: "Shares 3 mutual courses",
     avatar: (
       <figure className="avatar avatar-state-warning">
-        <span className="avatar-title bg-success rounded-circle">A</span>
+        <span className="avatar-title bg-success rounded-circle">AM</span>
       </figure>
     ),
   },
-  {
-    name: "Brietta Blogg",
-    title: "Actuary",
-    avatar: (
-      <figure className="avatar avatar-state-success">
-        <img src={WomenAvatar1} className="rounded-circle" alt="avatar" />
-      </figure>
-    ),
-  },
-  {
-    name: "Karl Hubane",
-    title: "Chemical Engineer",
-    avatar: (
-      <figure className="avatar avatar-state-success">
-        <img src={ManAvatar3} className="rounded-circle" alt="avatar" />
-      </figure>
-    ),
-  },
-  {
-    name: "Jillana Tows",
-    title: "Project Manager",
-    avatar: (
-      <figure className="avatar">
-        <img src={ManAvatar2} className="rounded-circle" alt="avatar" />
-      </figure>
-    ),
-  },
-  {
-    name: "Alina Derington",
-    title: "Nurse",
-    avatar: (
-      <figure className="avatar avatar-state-success">
-        <span className="avatar-title bg-info rounded-circle">AD</span>
-      </figure>
-    ),
-  },
-  {
-    name: "Stevy Kermeen",
-    title: "Associate Professor",
-    avatar: (
-      <figure className="avatar avatar-state-secondary">
-        <span className="avatar-title bg-warning rounded-circle">S</span>
-      </figure>
-    ),
-    status: "",
-  },
-  {
-    name: "Stevy Kermeen",
-    title: "Senior Quality Engineer",
-    avatar: (
-      <figure className="avatar">
-        <img src={ManAvatar1} className="rounded-circle" alt="avatar" />
-      </figure>
-    ),
-  },
-  {
-    name: "Gloriane Shimmans",
-    title: "Web Designer",
-    avatar: (
-      <figure className="avatar">
-        <img src={ManAvatar5} className="rounded-circle" alt="avatar" />
-      </figure>
-    ),
-  },
-  {
-    name: "Bernhard Perrett",
-    title: "Software Engineer",
-    avatar: (
-      <figure className="avatar avatar-state-warning">
-        <span className="avatar-title bg-secondary rounded-circle">B</span>
-      </figure>
-    ),
-    status: "",
-  },
+  // {
+  //   name: "Brietta Blogg",
+  //   title: "Actuary",
+  //   avatar: (
+  //     <figure className="avatar avatar-state-success">
+  //       <img src={WomenAvatar1} className="rounded-circle" alt="avatar" />
+  //     </figure>
+  //   ),
+  // },
+  // {
+  //   name: "Karl Hubane",
+  //   title: "Chemical Engineer",
+  //   avatar: (
+  //     <figure className="avatar avatar-state-success">
+  //       <img src={ManAvatar3} className="rounded-circle" alt="avatar" />
+  //     </figure>
+  //   ),
+  // },
+  // {
+  //   name: "Jillana Tows",
+  //   title: "Project Manager",
+  //   avatar: (
+  //     <figure className="avatar">
+  //       <img src={ManAvatar2} className="rounded-circle" alt="avatar" />
+  //     </figure>
+  //   ),
+  // },
+  // {
+  //   name: "Alina Derington",
+  //   title: "Nurse",
+  //   avatar: (
+  //     <figure className="avatar avatar-state-success">
+  //       <span className="avatar-title bg-info rounded-circle">AD</span>
+  //     </figure>
+  //   ),
+  // },
+  // {
+  //   name: "Stevy Kermeen",
+  //   title: "Associate Professor",
+  //   avatar: (
+  //     <figure className="avatar avatar-state-secondary">
+  //       <span className="avatar-title bg-warning rounded-circle">S</span>
+  //     </figure>
+  //   ),
+  //   status: "",
+  // },
+  // {
+  //   name: "Stevy Kermeen",
+  //   title: "Senior Quality Engineer",
+  //   avatar: (
+  //     <figure className="avatar">
+  //       <img src={ManAvatar1} className="rounded-circle" alt="avatar" />
+  //     </figure>
+  //   ),
+  // },
+  // {
+  //   name: "Gloriane Shimmans",
+  //   title: "Web Designer",
+  //   avatar: (
+  //     <figure className="avatar">
+  //       <img src={ManAvatar5} className="rounded-circle" alt="avatar" />
+  //     </figure>
+  //   ),
+  // },
+  // {
+  //   name: "Bernhard Perrett",
+  //   title: "Software Engineer",
+  //   avatar: (
+  //     <figure className="avatar avatar-state-warning">
+  //       <span className="avatar-title bg-secondary rounded-circle">B</span>
+  //     </figure>
+  //   ),
+  //   status: "",
+  // },
 ];

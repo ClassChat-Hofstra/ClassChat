@@ -45,16 +45,16 @@ function Navigation() {
       icon: <i className="ti ti-comment-alt"></i>,
     },
     {
-      name: "Friends",
+      name: "Classmates",
       icon: <i className="ti ti-user"></i>,
       notify_badge: true,
     },
+    // {
+    //   name: "Favorites",
+    //   icon: <i className="ti ti-star"></i>,
+    // },
     {
-      name: "Favorites",
-      icon: <i className="ti ti-star"></i>,
-    },
-    {
-      name: "Edit-Courses",
+      name: "Edit Courses",
       icon: <FontAwesomeIcon icon={faSchool} />,
     },
   ];

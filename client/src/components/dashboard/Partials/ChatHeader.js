@@ -18,11 +18,15 @@ function ChatHeader(props) {
 
   const courseRoster = useSelector((state) => state.courseRoster);
 
-  const pinnedPosts = courseRoster.find((course) => {
+  const foundCourse = courseRoster.find((course) => {
     return course.crn === props.selectedChat.crn;
-  }).pinnedPosts;
+  });
 
-  console.log(pinnedPosts);
+  let pinnedPosts;
+
+  if (foundCourse !== undefined) {
+    pinnedPosts = foundCourse.pinnedPosts;
+  }
 
   const toggle = () => setDropdownOpen((prevState) => !prevState);
 
@@ -80,9 +84,10 @@ function ChatHeader(props) {
       <div className="bulletin-board">
         <ul className="list-group list-group-horizontal flex-wrap">
           {/* <PinnedPost name="Mike" body="Test is on April 6" /> */}
-          {pinnedPosts.map((post) => {
-            return <PinnedPost name={post.sender.name} body={post.body} />;
-          })}
+          {pinnedPosts &&
+            pinnedPosts.map((post) => {
+              return <PinnedPost name={post.sender.name} body={post.body} />;
+            })}
         </ul>
       </div>
     </div>

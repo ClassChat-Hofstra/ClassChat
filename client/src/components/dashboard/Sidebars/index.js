@@ -13,11 +13,11 @@ function Index() {
       {(() => {
         if (selectedSidebar === "Chats") {
           return <ChatsIndex />;
-        } else if (selectedSidebar === "Friends") {
+        } else if (selectedSidebar === "Classmates") {
           return <FriendsIndex />;
         } else if (selectedSidebar === "Favorites") {
           return <FavoritesIndex />;
-        } else if (selectedSidebar === "Edit-Courses") {
+        } else if (selectedSidebar === "Edit Courses") {
           return <EditCoursesIndex />;
         }
       })()}
