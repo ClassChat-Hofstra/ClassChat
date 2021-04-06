@@ -9,6 +9,8 @@ export default function Course(props) {
   const { currentUser } = useAuth();
   const courses = useSelector((state) => state.courseRoster);
 
+  const socket = useSelector((state) => state.socket);
+
   const courseAdded = courses.some(
     (course) => course.crn === props.course_object.crn
   );
@@ -23,6 +25,7 @@ export default function Course(props) {
         course: props.course_object,
       })
       .then(dispatch(addCourse(props.course_object)))
+      .then(socket.emit("subscribe", props.course_object.crn))
       .catch((e) => console.log(e));
   }
 

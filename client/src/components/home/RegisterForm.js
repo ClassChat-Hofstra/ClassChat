@@ -78,7 +78,7 @@ function RegisterForm(props) {
         passwordRef.current.value,
         nameRef.current.value
       );
-      history.push("/edit-courses");
+      history.push("/home");
     } catch {
       setError("Failed to create an account");
     }
