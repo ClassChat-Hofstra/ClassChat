@@ -20,6 +20,9 @@ const io = require("socket.io")(http);
 const User = require("./models/User");
 const Course = require("./models/Course");
 const Message = require("./models/Message");
+const {
+    log
+} = require('console');
 
 app.use(express.static(path.join(__dirname, "client", "build")))
 app.use(express.json());
@@ -54,6 +57,7 @@ io.on('connection', (socket) => {
 
 
     socket.on('subscribe', (data) => {
+        console.log("crn: " + data);
         socket.join(data);
     });
 

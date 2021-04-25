@@ -18,6 +18,7 @@ export default function Course(props) {
   const dispatch = useDispatch();
 
   function handleAdd(e) {
+    console.log(props.course_object.crn);
     e.preventDefault();
     axios
       .post("/courses/addcourse", {
