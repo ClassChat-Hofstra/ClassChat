@@ -4,7 +4,7 @@ import ChatFooter from "./ChatFooter";
 import PerfectScrollbar from "react-perfect-scrollbar";
 import { useSelector, useDispatch } from "react-redux";
 import { useAuth } from "../../../contexts/AuthContext";
-import { loadCourses, updateMessages } from "../../../actions";
+import { loadCourses, updateMessages, addMessage } from "../../../actions";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faThumbtack } from "@fortawesome/free-solid-svg-icons";
 import PinAction from "./PinAction";
@@ -27,17 +27,37 @@ function Chat() {
 
   const dispatch = useDispatch();
 
+  //Created helper function to force state to reload on the 'respone' callback.
+  function useForceUpdate() {
+    const [value, setValue] = useState(0); // integer state
+    return () => setValue((value) => value + 1); // update the state to force render
+  }
+
+  const forceUpdate = useForceUpdate();
+
   const handleSubmit = (newValue) => {
     if (newValue.body.length === 0) {
       return;
     }
-    console.log(newValue);
-    socket.emit("send-post", {
-      email: newValue.sender.email,
-      body: newValue.body,
-      crn: selectedChat.crn,
-      obj: newValue,
-    });
+
+    socket.emit(
+      "send-post",
+      {
+        email: newValue.sender.email,
+        body: newValue.body,
+        crn: selectedChat.crn,
+        obj: newValue,
+      },
+      (response) => {
+        console.log(response);
+        newValue._id = response.messageId;
+        selectedChat.messages.push(newValue);
+        //forceUpdate();
+        dispatch(addMessage(newValue));
+        //console.log(newValue);
+      }
+    );
+    //Express Messaging OUTDATED
     // axios
     //   .post("/messages/newmessage", {
     //     email: newValue.sender.email,
@@ -49,13 +69,12 @@ function Chat() {
     //     setInputMsg("");
     //   })
     //   .catch((err) => console.log(err));
-    selectedChat.messages.push(newValue);
     setInputMsg("");
   };
 
   useEffect(() => {
     socket.on("recieve", (post) => {
-      console.log(post);
+      //console.log(post);
       // const course = courseRoster.find((crse) => crse.crn === post.crn);
       // course.messages.push(post.msg);
       //selectedChat.messages.push(post.msg);
@@ -78,6 +97,7 @@ function Chat() {
 
   const MessagesView = (props) => {
     const { message } = props;
+    //console.log(props);
 
     if (message.sender.email === currentUser.email) {
       message.type = "outgoing-message";

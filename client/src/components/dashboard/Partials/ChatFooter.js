@@ -42,6 +42,7 @@ function ChatFooter(props) {
       body: props.inputMsg,
       date: new Date().toLocaleDateString(),
       type: "outgoing-message",
+      reactions: [],
     });
   };
 

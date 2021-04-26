@@ -23,7 +23,7 @@ export default function CustomReactions(props) {
 
   const reactions = currentMessage.reactions;
 
-  console.log(reactions);
+  //console.log(reactions);
 
   const dispatch = useDispatch();
 
@@ -97,6 +97,7 @@ export default function CustomReactions(props) {
         if (emojiObject.count > 0) {
           return emojiObject;
         } else {
+          return undefined;
         }
       })
     );

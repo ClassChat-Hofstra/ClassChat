@@ -34,6 +34,11 @@ const ManageCoursesReducer = (state = [], action) => {
             const newState = state.map((course) => {
                 if (course.crn === action.payload.crn) {
                     course.messages.map((message) => {
+                        // message.reactions.push({
+                        //     emoji: "👍",
+                        //     emojiName: "thumbs up sign",
+                        //     count: 1
+                        // });
                         if (message._id === action.payload.id) {
                             message.reactions.push(action.payload.reaction);
                         }
@@ -51,7 +56,7 @@ const ManageCoursesReducer = (state = [], action) => {
         case "UPDATE_REACTION_CLICK": {
             console.log(action.payload);
 
-            console.log(onReaction());
+            //console.log(onReaction());
 
             return state;
         }
@@ -70,7 +75,7 @@ const ManageCoursesReducer = (state = [], action) => {
     }
 
 
-    function onReaction(emojis, emojiName, currentUser, messageID) {
+    function onReaction(emojiName, currentUser, messageID) {
         const currentCourse = state.find((course) => {
             return course.crn === state.selectedChat.crn;
         });
@@ -80,7 +85,8 @@ const ManageCoursesReducer = (state = [], action) => {
         const currentMessage = currentCourse.messages.find((message) => {
             return message._id === messageID;
         });
-        return emojis.filter((emojiObject) => {
+
+        return currentMessage.reactions.filter((emojiObject) => {
             if (emojiObject.emojiName === emojiName) {
                 if (emojiObject.senders.has(currentUser.email)) {
                     emojiObject.count -= 1;

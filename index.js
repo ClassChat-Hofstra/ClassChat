@@ -20,6 +20,9 @@ const io = require("socket.io")(http);
 const User = require("./models/User");
 const Course = require("./models/Course");
 const Message = require("./models/Message");
+const {
+    log
+} = require('console');
 
 app.use(express.static(path.join(__dirname, "client", "build")))
 app.use(express.json());
@@ -64,7 +67,7 @@ io.on('connection', (socket) => {
         });
     })
 
-    socket.on('send-post', (post) => {
+    socket.on('send-post', (post, callback) => {
         User.findOne({
             email: post.email
         }, function (err, user) {
@@ -83,9 +86,14 @@ io.on('connection', (socket) => {
                         messages: newMessage
                     }
                 }).catch((err) => console.log(err));
+                post.obj._id = newMessage._id;
                 socket.to(post.crn).emit("recieve", {
                     obj: post.obj,
                     crn: post.crn
+                })
+
+                callback({
+                    messageId: newMessage._id
                 })
             }
         })

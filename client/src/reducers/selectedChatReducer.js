@@ -4,6 +4,9 @@ const selectedChatReducer = (state = [], action) => {
             return action.chat;
         case 'UNSELECT_CHAT':
             return []
+        case 'ADD_MESSAGE':
+            state.messages.push(action.payload);
+            return state;
         default:
             return state
     }

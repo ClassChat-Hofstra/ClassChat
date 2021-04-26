@@ -35,6 +35,17 @@ export const updateMessageReactions = (reaction, crn, id) => {
     }
 }
 
+export const updateReactionClick = (reaction, crn, id) => {
+    return {
+        type: "UPDATE_REACTION_CLICK",
+        payload: {
+            reaction,
+            crn,
+            id
+        }
+    }
+}
+
 // export const loadCourses = (userEmail) => {
 //     // return {
 //     //     type: "LOAD_COURSES",
@@ -111,6 +122,11 @@ export const selectedChatAction = (chat) => ({
 export const unselectChat = () => ({
     type: 'UNSELECT_CHAT'
 });
+
+export const addMessage = (message) => ({
+    type: 'ADD_MESSAGE',
+    payload: message
+})
 
 export const setSocket = (socket) => {
     return {
