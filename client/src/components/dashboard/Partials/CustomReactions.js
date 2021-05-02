@@ -75,7 +75,7 @@ export default function CustomReactions() {
   }
 
   useEffect(() => {
-    console.log(emojis);
+    //console.log(emojis);
   }, [emojis]);
 
   return (

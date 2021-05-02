@@ -10,6 +10,7 @@ import { profileAction } from "../../../actions/index";
 import { mobileProfileAction } from "../../../actions/index";
 import { useSelector } from "react-redux";
 import PinnedPost from "./PinnedPost";
+import ChatHeaderNav from "./ChatHeaderNav";
 
 function ChatHeader(props) {
   const dispatch = useDispatch();
@@ -81,15 +82,15 @@ function ChatHeader(props) {
           </ul>
         </div>
       </div>
-      <div className="bulletin-board">
+      <ChatHeaderNav pinned={pinnedPosts} />
+      {/* <div className="bulletin-board">
         <ul className="list-group list-group-horizontal flex-wrap">
-          {/* <PinnedPost name="Mike" body="Test is on April 6" /> */}
           {pinnedPosts &&
             pinnedPosts.map((post) => {
               return <PinnedPost name={post.sender.name} body={post.body} />;
             })}
         </ul>
-      </div>
+      </div> */}
     </div>
   );
 }
