@@ -43,7 +43,7 @@ async function entityRecognition(client, messages) {
 async function bingWebSearch(query) {
     const connection = 'https://api.bing.microsoft.com' + '/v7.0/search?q=' + encodeURIComponent(query) + "&count=2";
     const headers = {
-        'Ocp-Apim-Subscription-Key': "17ee06fa76e3444fa5fc06c4ce94e100"
+        'Ocp-Apim-Subscription-Key': process.env.AZURE_SEARCH_KEY
     }
     try {
         var recs = {};
