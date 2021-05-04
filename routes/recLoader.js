@@ -82,9 +82,12 @@ function handleVideoResults(jsonObject) {
     var results = [];
     if (videoValues.length > 0) {
         var videoObj = videoValues[0];
-        var newLink = videoObj.embedHtml;
-        if (videoObj.embedHtml.includes("autoplay=1")) {
-            newLink = videoObj.embedHtml.replace("autoplay=1", "autoplay=0");
+        var newLink = videoObj.contentUrl;
+        // if (videoObj.embedHtml.includes("autoplay=1")) {
+        //     newLink = videoObj.embedHtml.replace("autoplay=1", "autoplay=0");
+        // }
+        if (videoObj.contentUrl.includes("youtube.com/watch")) {
+            newLink = videoObj.contentUrl.replace("watch?v=", "embed/");
         }
         results.push({
             name: videoObj.name,

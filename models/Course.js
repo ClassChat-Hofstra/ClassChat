@@ -31,7 +31,8 @@ const CourseSchema = new Schema({
         type: Schema.Types.ObjectId,
         ref: "user"
     }],
-    messages: [MessageSchema]
+    messages: [MessageSchema],
+    recommendations: []
 });
 
 CourseSchema.plugin(mongoose_fuzzy_searching, {

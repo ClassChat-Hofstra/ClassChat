@@ -5,9 +5,12 @@ const mongoose = require("mongoose");
 const bodyParser = require("body-parser");
 const path = require("path");
 
+const recLoader = require("./routes/recLoader");
+
 const auth = require("./routes/auth");
 const courses = require("./routes/courses");
 const messages = require("./routes/messages");
+const recommendations = require("./routes/recommendations");
 
 const PORT = process.env.PORT || 5000;
 
@@ -43,6 +46,7 @@ mongoose.connect(process.env.MONGO_URI, {
 app.use("/courses", courses);
 app.use("/auth", auth);
 app.use("/messages", messages)
+app.use("/recs", recommendations);
 
 app.get("*", (req, res) => {
     res.sendFile(path.join(__dirname, "client", "build", "index.html"));
@@ -87,6 +91,80 @@ io.on('connection', (socket) => {
                         messages: newMessage
                     }
                 }).catch((err) => console.log(err));
+
+                var query = Course.aggregate([{
+                        $match: {
+                            crn: post.crn
+                        }
+                    },
+                    {
+                        $unwind: "$messages"
+                    },
+                    {
+                        $project: {
+                            _id: 0,
+                            messages: 1
+                        }
+                    },
+                    {
+                        $sort: {
+                            'messages._id': -1
+                        }
+                    },
+                    {
+                        $limit: 5
+                    }
+                ]);
+
+                query.exec((err, res) => {
+                    if (err) {
+                        console.log(err);
+                    } else {
+                        const lastFiveMessages = res.map((msg) => {
+                            return msg.messages.body;
+                        })
+                        recLoader(lastFiveMessages).then(results => {
+                            Course.updateOne({
+                                crn: post.crn
+                            }, {
+                                $set: {
+                                    recommendations: results
+                                }
+                            }, function (err) {
+                                if (err) {
+                                    console.log(err);
+                                }
+                            })
+                        }).catch(e => {
+                            console.log(e);
+                        })
+                    }
+                })
+
+                // var query = Course.findOne({
+                //     crn: post.crn
+                // }).sort({
+                //     _id: -1
+                // }).slice("messages", 5)
+
+
+                // query.exec((err, result) => {
+                //     if (err) {
+                //         console.log(err);
+                //     } else {
+                //         const messages = result.messages.map((msg) => {
+                //             return msg.body
+                //         });
+                //         axios.post("localhost:5000/recs/newrec", {
+                //             messages: messages,
+                //             crn: post.crn
+                //         }).catch(error => {
+                //             console.log(error);
+                //         });
+                //     }
+                // })
+
+
                 socket.to(post.crn).emit("recieve", {
                     obj: post.obj,
                     crn: post.crn

@@ -100,6 +100,7 @@ function Index() {
         course_number={courseData.course_number}
         course_section={courseData.course_section}
         messages={courseData.messages}
+        recommendations={courseData.recommendations}
       />
     );
   }
