@@ -1,4 +1,6 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
+import firebase from "firebase";
+import { Alert } from "react-bootstrap";
 import {
   Modal,
   ModalBody,
@@ -20,14 +22,55 @@ import {
   CustomInput,
 } from "reactstrap";
 import classnames from "classnames";
-import ManAvatar3 from "../../../assets/img/man_avatar3.jpg";
 
 function EditProfileModal(props) {
+  const [oldPass, setOldPass] = useState("");
+  const [newPass, setNewPass] = useState("");
+
+  const [error, setError] = useState("");
+  const [message, setMessage] = useState("");
+
+  var user = firebase.auth().currentUser;
+
   const [activeTab, setActiveTab] = useState("1");
 
   const toggle = (tab) => {
     if (activeTab !== tab) setActiveTab(tab);
   };
+
+  function handleSave(e) {
+    switch (activeTab) {
+      case "4":
+        changePassword();
+        break;
+      default:
+    }
+  }
+
+  function changePassword() {
+    const credential = firebase.auth.EmailAuthProvider.credential(
+      user.email,
+      oldPass
+    );
+    user
+      .reauthenticateWithCredential(credential)
+      .then(() => {
+        user
+          .updatePassword(newPass)
+          .then(() => {
+            setError("");
+            setMessage("Password has been changed");
+          })
+          .catch((e) => {
+            setMessage("");
+            setError("New password is invalid");
+          });
+      })
+      .catch((e) => {
+        setMessage("");
+        setError("Current password is incorrect");
+      });
+  }
 
   return (
     <div>
@@ -75,6 +118,17 @@ function EditProfileModal(props) {
                 Social Links
               </NavLink>
             </NavItem>
+            <NavItem>
+              <NavLink
+                href="#/"
+                className={classnames({ active: activeTab === "4" })}
+                onClick={() => {
+                  toggle("4");
+                }}
+              >
+                Change Password
+              </NavLink>
+            </NavItem>
           </Nav>
           <Form>
             <TabContent activeTab={activeTab}>
@@ -91,69 +145,29 @@ function EditProfileModal(props) {
                   </InputGroup>
                 </FormGroup>
                 <FormGroup>
-                  <Label for="avatar">Avatar</Label>
-                  <div className="d-flex align-items-center">
-                    <div>
-                      <figure className="avatar mr-3 item-rtl">
-                        <img
-                          src={ManAvatar3}
-                          className="rounded-circle"
-                          alt="avatar"
-                        />
-                      </figure>
-                    </div>
-                    <CustomInput
-                      type="file"
-                      id="exampleCustomFileBrowser"
-                      name="customFile"
-                    />
-                  </div>
-                </FormGroup>
-                <FormGroup>
-                  <Label for="city">City</Label>
+                  <Label for="email">Email</Label>
                   <InputGroup>
                     <InputGroupAddon addonType="prepend">
                       <InputGroupText>
-                        <i className="ti ti-map-alt"></i>
+                        <i className="ti ti-user"></i>
                       </InputGroupText>
                     </InputGroupAddon>
-                    <Input
-                      type="text"
-                      name="city"
-                      id="city"
-                      placeholder="Ex: Columbia"
-                    />
+                    <Input type="text" name="email" id="email" />
                   </InputGroup>
                 </FormGroup>
                 <FormGroup>
-                  <Label for="phone">Phone</Label>
+                  <Label for="password">Enter password to save changes</Label>
                   <InputGroup>
                     <InputGroupAddon addonType="prepend">
                       <InputGroupText>
-                        <i className="ti ti-mobile"></i>
+                        <i className="ti ti-user"></i>
                       </InputGroupText>
                     </InputGroupAddon>
                     <Input
-                      type="text"
-                      name="phone"
-                      id="phone"
-                      placeholder="(555) 555 55 55"
-                    />
-                  </InputGroup>
-                </FormGroup>
-                <FormGroup>
-                  <Label for="phone">Website</Label>
-                  <InputGroup>
-                    <InputGroupAddon addonType="prepend">
-                      <InputGroupText>
-                        <i className="ti ti-link"></i>
-                      </InputGroupText>
-                    </InputGroupAddon>
-                    <Input
-                      type="text"
-                      name="website"
-                      id="website"
-                      placeholder="https://"
+                      type="password"
+                      name="password"
+                      id="password"
+                      required
                     />
                   </InputGroup>
                 </FormGroup>
@@ -294,11 +308,51 @@ function EditProfileModal(props) {
                   </InputGroup>
                 </FormGroup>
               </TabPane>
+              <TabPane tabId="4">
+                <FormGroup>
+                  <Label for="newPassword">New Password</Label>
+                  <InputGroup>
+                    <InputGroupAddon addonType="prepend">
+                      <InputGroupText>
+                        <i className="ti ti-unlock"></i>
+                      </InputGroupText>
+                    </InputGroupAddon>
+                    <Input
+                      type="password"
+                      name="newPassword"
+                      id="newPassword"
+                      onChange={(e) => setNewPass(e.target.value)}
+                      required
+                    />
+                  </InputGroup>
+                </FormGroup>
+                <FormGroup>
+                  <Label for="currentPassword">Current Password</Label>
+                  <InputGroup>
+                    <InputGroupAddon addonType="prepend">
+                      <InputGroupText>
+                        <i className="ti ti-unlock"></i>
+                      </InputGroupText>
+                    </InputGroupAddon>
+                    <Input
+                      type="password"
+                      name="currentPassword"
+                      id="currentPassword"
+                      onChange={(e) => setOldPass(e.target.value)}
+                      required
+                    />
+                  </InputGroup>
+                </FormGroup>
+                {error && <Alert variant="danger">{error}</Alert>}
+                {message && <Alert variant="success">{message}</Alert>}
+              </TabPane>
             </TabContent>
           </Form>
         </ModalBody>
         <ModalFooter>
-          <Button color="primary">Save</Button>
+          <Button onClick={handleSave} color="primary">
+            Save
+          </Button>
         </ModalFooter>
       </Modal>
     </div>
