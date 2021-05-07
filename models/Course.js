@@ -32,7 +32,8 @@ const CourseSchema = new Schema({
         ref: "user"
     }],
     messages: [MessageSchema],
-    recommendations: []
+    recommendations: [],
+    sections: []
 });
 
 CourseSchema.plugin(mongoose_fuzzy_searching, {

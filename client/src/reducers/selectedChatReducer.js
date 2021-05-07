@@ -4,6 +4,12 @@ const selectedChatReducer = (state = [], action) => {
             return action.chat;
         case 'UNSELECT_CHAT':
             return []
+        case 'CREATE_SECTION':
+            //console.log(action.payload);
+            //state.sections.push(action.payload);
+            const newState = Object.assign({}, state);
+            newState.sections.push(action.payload);
+            return newState;
         default:
             return state
     }

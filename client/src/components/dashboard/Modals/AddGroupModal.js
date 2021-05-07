@@ -13,11 +13,15 @@ import {
   InputGroup,
 } from "reactstrap";
 
-import ManAvatar1 from "../../../assets/img/man_avatar1.jpg";
-import WomenAvatar4 from "../../../assets/img/women_avatar4.jpg";
+import { useDispatch } from "react-redux";
+import { createSection } from "../../../actions";
 
 function AddGroupModal() {
+  const dispatch = useDispatch();
+
   const [modal, setModal] = useState(false);
+
+  const [sectionName, setSectionName] = useState("");
 
   const modalToggle = () => setModal(!modal);
 
@@ -42,6 +46,11 @@ function AddGroupModal() {
     );
   };
 
+  function handleClick() {
+    dispatch(createSection({ sectionName }));
+    modalToggle();
+  }
+
   return (
     <div>
       <button
@@ -56,7 +65,7 @@ function AddGroupModal() {
         target={"Tooltip-Add-Group"}
         toggle={tooltipToggle}
       >
-        New Group
+        New Section
       </Tooltip>
       <Modal
         className="modal-dialog-zoom"
@@ -65,65 +74,20 @@ function AddGroupModal() {
         centered
       >
         <ModalHeader toggle={modalToggle}>
-          <i className="fa fa-users"></i> New Group
+          <i className="fa fa-users"></i> New Section
         </ModalHeader>
         <ModalBody>
           <Form>
             <FormGroup>
-              <Label for="group_name">Group name</Label>
+              <Label for="group_name">Section name</Label>
               <InputGroup>
-                <Input type="text" name="group_name" id="group_name" />
+                <Input
+                  type="text"
+                  name="group_name"
+                  id="group_name"
+                  onChange={(event) => setSectionName(event.target.value)}
+                />
               </InputGroup>
-            </FormGroup>
-            <FormGroup>
-              <p>The group members</p>
-              <div className="avatar-group">
-                <figure className="avatar" id="Tooltip-Avatar1">
-                  <span className="avatar-title bg-success rounded-circle">
-                    T
-                  </span>
-                </figure>
-                <AvatarTooltip name="Tobit Spraging" id={1} />
-
-                <figure className="avatar" id="Tooltip-Avatar2">
-                  <img
-                    src={WomenAvatar4}
-                    className="rounded-circle"
-                    alt="avatar"
-                  />
-                </figure>
-                <AvatarTooltip name="Cloe Jeayes" id={2} />
-
-                <figure className="avatar" id="Tooltip-Avatar3">
-                  <span className="avatar-title bg-warning rounded-circle">
-                    M
-                  </span>
-                </figure>
-                <AvatarTooltip name="Marlee Perazzo" id={3} />
-
-                <figure className="avatar" id="Tooltip-Avatar4">
-                  <img
-                    src={ManAvatar1}
-                    className="rounded-circle"
-                    alt="avatar"
-                  />
-                </figure>
-                <AvatarTooltip name="Stafford Pioch" id={4} />
-
-                <figure className="avatar" id="Tooltip-Avatar5">
-                  <span className="avatar-title bg-info rounded-circle">B</span>
-                </figure>
-                <AvatarTooltip name="Bethena Langsdon" id={5} />
-
-                <a href="#/" title="Add friends" id="Tooltip-Avatar6">
-                  <figure className="avatar">
-                    <span className="avatar-title bg-primary rounded-circle">
-                      +
-                    </span>
-                  </figure>
-                </a>
-                <AvatarTooltip name="Add friends" id={6} />
-              </div>
             </FormGroup>
             <FormGroup>
               <Label for="description">Description</Label>
@@ -132,8 +96,8 @@ function AddGroupModal() {
           </Form>
         </ModalBody>
         <ModalFooter>
-          <Button color="primary" onClick={modalToggle}>
-            Create Group
+          <Button color="primary" onClick={handleClick}>
+            Create Section
           </Button>
         </ModalFooter>
       </Modal>

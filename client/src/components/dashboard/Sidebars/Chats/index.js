@@ -10,6 +10,7 @@ import { chatLists } from "./Data";
 import { mobileSidebarAction } from "../../../../actions";
 import { selectedChatAction, loadCourses } from "../../../../actions";
 import { useAuth } from "../../../../contexts/AuthContext";
+import CoursesDropdown from "../Edit-Courses/CoursesDropdown";
 
 function Index() {
   // useEffect(() => {
@@ -29,6 +30,10 @@ function Index() {
   const [tooltipOpen, setTooltipOpen] = useState(false);
 
   const toggle = () => setTooltipOpen(!tooltipOpen);
+
+  useEffect(() => {
+    console.log("this was called");
+  }, [selectedChat.sections]);
 
   const mobileSidebarClose = () => {
     dispatch(mobileSidebarAction(false));
@@ -70,6 +75,53 @@ function Index() {
 
   const ChatListView = (props) => {
     return (
+      <div>
+        <li
+          style={{ backgroundColor: "lightgray" }}
+          className={
+            "list-group-item " +
+            (props.crn === selectedChat.crn ? "open-chat" : "")
+          }
+          onClick={() => chatSelectHandle(props)}
+        >
+          {/* {chat.avatar} */}
+          <div className="users-list-body">
+            <h5>
+              {props.subject}-{props.course_number}: {props.course_title}
+            </h5>
+            <div
+              style={{
+                boxShadow: "-8px 1px 10px 5px lightgrey",
+                background: "lightgrey",
+              }}
+              className="users-list-action action-toggle"
+            >
+              <ChatsDropdown />
+            </div>
+          </div>
+        </li>
+        <ul className="list-group">
+          {/* <li>
+                <SectionListView
+                  crn="123456"
+                  sectionName="This is a section"
+                ></SectionListView>
+              </li> */}
+          {props.sections &&
+            props.sections.map((sec) => {
+              return (
+                <li>
+                  <SectionListView sectionName={sec.sectionName} crn="123456" />
+                </li>
+              );
+            })}
+        </ul>
+      </div>
+    );
+  };
+
+  const SectionListView = (props) => {
+    return (
       <li
         className={
           "list-group-item " +
@@ -77,11 +129,8 @@ function Index() {
         }
         onClick={() => chatSelectHandle(props)}
       >
-        {/* {chat.avatar} */}
         <div className="users-list-body">
-          <h5>
-            {props.subject}-{props.course_number}: {props.course_title}
-          </h5>
+          <h5>{props.sectionName}</h5>
           <div className="users-list-action action-toggle">
             <ChatsDropdown />
           </div>
@@ -101,6 +150,7 @@ function Index() {
         course_section={courseData.course_section}
         messages={courseData.messages}
         recommendations={courseData.recommendations}
+        sections={courseData.sections}
       />
     );
   }
@@ -115,7 +165,7 @@ function Index() {
           </li>
           <li className="list-inline-item">
             <button
-              onClick={() => dispatch(sidebarAction("Friends"))}
+              onClick={() => dispatch(sidebarAction("Classmates"))}
               className="btn btn-light"
               id="Tooltip-New-Chat"
             >

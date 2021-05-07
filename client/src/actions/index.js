@@ -114,3 +114,10 @@ export const pinPost = (post) => {
         payload: post
     }
 }
+
+export const createSection = (section) => {
+    return {
+        type: "CREATE_SECTION",
+        payload: section
+    }
+}
