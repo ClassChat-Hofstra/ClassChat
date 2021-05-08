@@ -11,6 +11,7 @@ const auth = require("./routes/auth");
 const courses = require("./routes/courses");
 const messages = require("./routes/messages");
 const recommendations = require("./routes/recommendations");
+const userRoute = require("./routes/user");
 
 const PORT = process.env.PORT || 5000;
 
@@ -47,6 +48,7 @@ app.use("/courses", courses);
 app.use("/auth", auth);
 app.use("/messages", messages)
 app.use("/recs", recommendations);
+app.use("/users", userRoute);
 
 app.get("*", (req, res) => {
     res.sendFile(path.join(__dirname, "client", "build", "index.html"));

@@ -1,6 +1,3 @@
-import axios from "axios";
-
-
 const ManageCoursesReducer = (state = [], action) => {
     switch (action.type) {
         case "ADD_COURSE":

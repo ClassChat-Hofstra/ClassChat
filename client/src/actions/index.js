@@ -121,3 +121,24 @@ export const createSection = (section) => {
         payload: section
     }
 }
+
+export const updateCurrentUser = (user) => {
+    return {
+        type: "UPDATE_CURRENT_USER",
+        payload: user
+    }
+}
+
+export const updateUsersName = (newName) => {
+    return {
+        type: "UPDATE_USERS_NAME",
+        payload: newName
+    }
+}
+
+export const updateUsersEmail = (newEmail) => {
+    return {
+        type: "UPDATE_USERS_EMAIL",
+        payload: newEmail
+    }
+}

@@ -7,7 +7,11 @@ import DisconnectedModal from "./Modals/DisconnectedModal";
 import { useDispatch, useSelector } from "react-redux";
 import getCourseData from "../../CourseData";
 import { useAuth } from "../../contexts/AuthContext";
-import { loadCourses, loadInitialCourses } from "../../actions";
+import {
+  loadCourses,
+  loadInitialCourses,
+  updateCurrentUser,
+} from "../../actions";
 import axios from "axios";
 import io from "socket.io-client";
 
@@ -38,6 +42,13 @@ function Layout() {
         console.log(rooms);
         socket.emit("subscribe", rooms);
         dispatch(loadCourses(res.data));
+      });
+
+    axios
+      .post("/auth/currentuser", { email: currentUser.email })
+      .then((res) => {
+        console.log(res.data);
+        dispatch(updateCurrentUser(res.data));
       });
   }, []);
 
