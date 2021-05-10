@@ -22,4 +22,14 @@ router.post("/updateNameAndEmail", (req, res) => {
     })
 })
 
+router.post("/getManyUsers", async (req, res) => {
+    User.find().where("_id").in(req.body.userIDs).exec((err, users) => {
+        if (err) {
+            console.log(err);
+        } else {
+            res.send(users);
+        }
+    })
+})
+
 module.exports = router;
