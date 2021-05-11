@@ -1,6 +1,3 @@
-import update from 'immutability-helper';
-import produce from "immer"
-
 const ManageCoursesReducer = (state = [], action) => {
     switch (action.type) {
         case "ADD_COURSE":

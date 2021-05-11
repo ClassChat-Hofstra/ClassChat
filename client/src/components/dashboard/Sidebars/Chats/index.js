@@ -40,8 +40,14 @@ function Index() {
     document.body.classList.remove("navigation-open");
   };
 
+  const sectionSelectHandle = (chatSection) => {
+    console.log(chatSection);
+    dispatch(selectedChatAction(chatSection.secObject));
+  };
+
   const chatSelectHandle = (chat) => {
     //chat.unread_messages = 0;
+    console.log(chat);
     dispatch(selectedChatAction(chat));
     dispatch(mobileSidebarAction(false));
   };
@@ -77,7 +83,7 @@ function Index() {
     return (
       <div>
         <li
-          style={{ backgroundColor: "lightgray" }}
+          style={{ backgroundColor: "#f3f1f1" }}
           className={
             "list-group-item " +
             (props.crn === selectedChat.crn ? "open-chat" : "")
@@ -91,8 +97,8 @@ function Index() {
             </h5>
             <div
               style={{
-                boxShadow: "-8px 1px 10px 5px lightgrey",
-                background: "lightgrey",
+                boxShadow: "-8px 1px 10px 5px #f3f1f1",
+                background: "#f3f1f1",
               }}
               className="users-list-action action-toggle"
             >
@@ -111,7 +117,11 @@ function Index() {
             props.sections.map((sec) => {
               return (
                 <li>
-                  <SectionListView sectionName={sec.sectionName} crn="123456" />
+                  <SectionListView
+                    sectionName={sec.sectionName}
+                    crn={sec.crn}
+                    secObject={sec}
+                  />
                 </li>
               );
             })}
@@ -127,9 +137,9 @@ function Index() {
           "list-group-item " +
           (props.crn === selectedChat.crn ? "open-chat" : "")
         }
-        onClick={() => chatSelectHandle(props)}
+        onClick={() => sectionSelectHandle(props)}
       >
-        <div className="users-list-body">
+        <div className="users-list-body" style={{ marginLeft: "25%" }}>
           <h5>{props.sectionName}</h5>
           <div className="users-list-action action-toggle">
             <ChatsDropdown />
@@ -151,6 +161,7 @@ function Index() {
         messages={courseData.messages}
         pinnedPosts={courseData.pinnedPosts}
         recommendations={courseData.recommendations}
+        isSection="false"
         sections={courseData.sections}
       />
     );

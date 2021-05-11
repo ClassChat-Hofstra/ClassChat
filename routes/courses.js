@@ -152,4 +152,20 @@ router.post("/removepin", (req, res) => {
     })
 })
 
+router.post("/addsection", (req, res) => {
+    Course.updateOne({
+        crn: req.body.crn
+    }, {
+        $push: {
+            sections: req.body.sectionObj
+        }
+    }, function (err, result) {
+        if (err) {
+            console.log(err);
+        } else {
+            res.send(result);
+        }
+    })
+})
+
 module.exports = router;

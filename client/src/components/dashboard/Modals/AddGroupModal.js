@@ -13,11 +13,14 @@ import {
   InputGroup,
 } from "reactstrap";
 
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { createSection } from "../../../actions";
+import axios from "axios";
 
 function AddGroupModal() {
   const dispatch = useDispatch();
+
+  const selectedChat = useSelector((state) => state.selectedChat);
 
   const [modal, setModal] = useState(false);
 
@@ -47,7 +50,28 @@ function AddGroupModal() {
   };
 
   function handleClick() {
-    dispatch(createSection({ sectionName }));
+    const sectionObj = {
+      sectionName: sectionName,
+      crn: selectedChat.crn + "-" + sectionName,
+      course_title: selectedChat.course_title,
+      course_number: selectedChat.course_number,
+      course_section: selectedChat.course_section,
+      subject: selectedChat.subject,
+      messages: [],
+      pinnedPosts: [],
+      recommendations: [],
+      isSection: true,
+    };
+
+    axios
+      .post("/courses/addsection", {
+        crn: selectedChat.crn,
+        sectionObj: sectionObj,
+      })
+      .then(() => {
+        dispatch(createSection(sectionObj));
+      })
+      .catch((e) => console.log(e));
     modalToggle();
   }
 
