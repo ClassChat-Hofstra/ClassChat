@@ -22,6 +22,8 @@
     "express": "^4.17.1",
     "filepond-plugin-image-exif-orientation": "^1.0.11",
     "filepond-plugin-image-preview": "^4.6.6",
+    "immer": "^9.0.2",
+    "immutability-helper": "^3.1.1",
     "is-empty": "^1.2.0",
     "jsonwebtoken": "^8.5.1",
     "mongoose": "^5.11.8",

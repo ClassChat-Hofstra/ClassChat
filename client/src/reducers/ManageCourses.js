@@ -1,3 +1,6 @@
+import update from 'immutability-helper';
+import produce from "immer"
+
 const ManageCoursesReducer = (state = [], action) => {
     switch (action.type) {
         case "ADD_COURSE":
@@ -21,11 +24,39 @@ const ManageCoursesReducer = (state = [], action) => {
             console.log(action);
             return (state.map((course) => {
                 if (course.crn === action.payload.crn) {
-                    course.pinnedPosts.push(action.payload.messageObject);
+                    var alreadyPinned = course.pinnedPosts.find((posts) => {
+                        return posts._id === action.payload.messageObject._id;
+                    })
+                    if (!alreadyPinned) {
+                        course.pinnedPosts.push(action.payload.messageObject);
+                    }
+                }
+                return course;
+            }))
+        case "REMOVE_PIN":
+            return (state.map((course) => {
+                if (course.crn === action.payload.crn) {
+                    return {
+                        ...course,
+                        pinnedPosts: course.pinnedPosts.filter((post) => post._id !== action.payload.messageObj._id)
+                    }
                 }
                 return course;
             }))
 
+            // return produce(state, (draftState) => {
+            //     draftState.map((course) => {
+            //         if (course.crn === action.payload.crn) {
+            //             // course.pinnedPosts.filter((post) => {
+            //             //     return post._id !== action.payload.messageObj._id
+            //             // })
+            //             console.log("HEY IM CALLED AT LEAST");
+            //             course.pinnedPosts = [];
+            //         }
+            //         return course;
+            //     })
+            // })
+            //return newState;
         default:
             return state;
     }

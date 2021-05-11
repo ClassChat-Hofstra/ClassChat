@@ -117,31 +117,31 @@ io.on('connection', (socket) => {
                         $limit: 5
                     }
                 ]);
-
-                query.exec((err, res) => {
-                    if (err) {
-                        console.log(err);
-                    } else {
-                        const lastFiveMessages = res.map((msg) => {
-                            return msg.messages.body;
-                        })
-                        recLoader(lastFiveMessages).then(results => {
-                            Course.updateOne({
-                                crn: post.crn
-                            }, {
-                                $set: {
-                                    recommendations: results
-                                }
-                            }, function (err) {
-                                if (err) {
-                                    console.log(err);
-                                }
-                            })
-                        }).catch(e => {
-                            console.log(e);
-                        })
-                    }
-                })
+                //KEEP OFF TEMPORARILY SO YOU DONT USE ALL OF YOUR AZURE REQUESTS
+                // query.exec((err, res) => {
+                //     if (err) {
+                //         console.log(err);
+                //     } else {
+                //         const lastFiveMessages = res.map((msg) => {
+                //             return msg.messages.body;
+                //         })
+                //         recLoader(lastFiveMessages).then(results => {
+                //             Course.updateOne({
+                //                 crn: post.crn
+                //             }, {
+                //                 $set: {
+                //                     recommendations: results
+                //                 }
+                //             }, function (err) {
+                //                 if (err) {
+                //                     console.log(err);
+                //                 }
+                //             })
+                //         }).catch(e => {
+                //             console.log(e);
+                //         })
+                //     }
+                // })
 
                 // var query = Course.findOne({
                 //     crn: post.crn

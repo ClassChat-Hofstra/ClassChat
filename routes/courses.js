@@ -121,4 +121,35 @@ router.post("/searchcourses", async (req, res) => {
     }
 })
 
+router.post("/pinpost", (req, res) => {
+    Course.updateOne({
+        crn: req.body.crn
+    }, {
+        $push: {
+            pinnedPosts: req.body.post
+        }
+    }).then((result) => {
+        res.send(result);
+    }).catch(e => {
+        console.log(e);
+    })
+})
+
+router.post("/removepin", (req, res) => {
+    console.log(req.body);
+    Course.updateOne({
+        crn: req.body.crn
+    }, {
+        $pull: {
+            pinnedPosts: {
+                "_id": req.body.id
+            }
+        }
+    }).then((result) => {
+        res.send(result);
+    }).catch(e => {
+        console.log(e);
+    })
+})
+
 module.exports = router;

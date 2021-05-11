@@ -115,6 +115,13 @@ export const pinPost = (post) => {
     }
 }
 
+export const removePin = (post) => {
+    return {
+        type: "REMOVE_PIN",
+        payload: post
+    }
+}
+
 export const createSection = (section) => {
     return {
         type: "CREATE_SECTION",

@@ -53,6 +53,15 @@ function Chat() {
     setInputMsg("");
   };
 
+  function isAlreadyPinned(messageID) {
+    selectedChat.pinnedPosts.forEach((post) => {
+      if (post._id === messageID) {
+        return true;
+      }
+    });
+    return false;
+  }
+
   useEffect(() => {
     socket.on("recieve", (post) => {
       console.log(post);

@@ -18,8 +18,8 @@ export default function VideoRec(props) {
                 width="426"
                 height="240"
                 src={props.embedHtml}
-                frameborder="0"
-                allowfullscreen
+                frameBorder="0"
+                allowFullScreen
               ></iframe>
             </Card.Text>
           </Card.Body>

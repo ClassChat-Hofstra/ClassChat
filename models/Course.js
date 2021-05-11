@@ -33,6 +33,7 @@ const CourseSchema = new Schema({
     }],
     messages: [MessageSchema],
     recommendations: [],
+    pinnedPosts: [],
     sections: []
 });
 

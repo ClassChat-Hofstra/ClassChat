@@ -8,7 +8,8 @@ import { useSelector } from "react-redux";
 export default function ChatHeaderNav(props) {
   const selectedChat = useSelector((state) => state.selectedChat);
   const [key, setKey] = useState("");
-  console.log(props.pinned);
+  //console.log(props.pinned);
+  console.log(props);
 
   function convertWebRecsToArray() {
     const recsArr = [];
@@ -59,7 +60,13 @@ export default function ChatHeaderNav(props) {
               {props.pinned &&
                 props.pinned.map((post) => {
                   return (
-                    <PinnedPost name={post.sender.name} body={post.body} />
+                    <PinnedPost
+                      key={post._id}
+                      name={post.sender.name}
+                      body={post.body}
+                      crn={selectedChat.crn}
+                      postObj={post}
+                    />
                   );
                 })}
             </ul>
