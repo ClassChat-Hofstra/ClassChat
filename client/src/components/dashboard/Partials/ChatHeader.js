@@ -65,7 +65,7 @@ function ChatHeader(props) {
               data-toggle="tooltip"
               title="Video call"
             >
-              <Dropdown isOpen={dropdownOpen} toggle={toggle}>
+              {/* <Dropdown isOpen={dropdownOpen} toggle={toggle}>
                 <DropdownToggle
                   tag="span"
                   data-toggle="dropdown"
@@ -82,7 +82,7 @@ function ChatHeader(props) {
                   <DropdownItem divider />
                   <DropdownItem>Block</DropdownItem>
                 </DropdownMenu>
-              </Dropdown>
+              </Dropdown> */}
             </li>
           </ul>
         </div>

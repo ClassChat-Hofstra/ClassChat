@@ -13,7 +13,7 @@ function Index() {
   const [mutualClassState, setMutualClassState] = useState({});
 
   useEffect(() => {
-    inputRef.current.focus();
+    //inputRef.current.focus();
   });
 
   const inputRef = useRef();
@@ -94,9 +94,9 @@ function Index() {
       <header>
         <span>Classmates</span>
         <ul className="list-inline">
-          <li className="list-inline-item">
+          {/* <li className="list-inline-item">
             <AddFriendsModal />
-          </li>
+          </li> */}
           <li className="list-inline-item d-xl-none d-inline">
             <button onClick={mobileSidebarClose} className="btn btn-light">
               <i className="ti ti-close"></i>
@@ -104,14 +104,14 @@ function Index() {
           </li>
         </ul>
       </header>
-      <form>
+      {/* <form>
         <input
           type="text"
           className="form-control"
           placeholder="Search classmates"
           ref={inputRef}
         />
-      </form>
+      </form> */}
       <div className="sidebar-body">
         <PerfectScrollbar>
           <ul className="list-group list-group-flush">

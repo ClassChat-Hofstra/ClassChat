@@ -122,11 +122,6 @@ function Navigation() {
             </a>
           </li>
           <li>
-            <a href="/home" onClick={settingsModalToggle}>
-              <i className="ti ti-settings"></i>
-            </a>
-          </li>
-          <li>
             <a href="/" onClick={handleLogout}>
               <i className="ti ti-power-off"></i>
             </a>

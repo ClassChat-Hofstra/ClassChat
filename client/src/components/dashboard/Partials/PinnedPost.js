@@ -54,6 +54,9 @@ export default function PinnedPost(props) {
           <Card.Body>
             <Card.Text>{props.body}</Card.Text>
           </Card.Body>
+          <Card.Footer>
+            <Card.Text>Pin expires in 7 days</Card.Text>
+          </Card.Footer>
         </Card>
       </li>
     </div>
