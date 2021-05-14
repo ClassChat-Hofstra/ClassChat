@@ -88,7 +88,7 @@ io.on('connection', (socket) => {
                     body: post.body,
                     date: post.obj.date
                 })
-                if (post.isSection === "false") {
+                if (post.isSection === false) {
                     Course.updateOne({
                         crn: post.crn
                     }, {
@@ -131,30 +131,32 @@ io.on('connection', (socket) => {
                     }
                 ]);
                 //KEEP OFF TEMPORARILY SO YOU DONT USE ALL OF YOUR AZURE REQUESTS
-                // query.exec((err, res) => {
-                //     if (err) {
-                //         console.log(err);
-                //     } else {
-                //         const lastFiveMessages = res.map((msg) => {
-                //             return msg.messages.body;
-                //         })
-                //         recLoader(lastFiveMessages).then(results => {
-                //             Course.updateOne({
-                //                 crn: post.crn
-                //             }, {
-                //                 $set: {
-                //                     recommendations: results
-                //                 }
-                //             }, function (err) {
-                //                 if (err) {
-                //                     console.log(err);
-                //                 }
-                //             })
-                //         }).catch(e => {
-                //             console.log(e);
-                //         })
-                //     }
-                // })
+                query.exec((err, res) => {
+                    if (err) {
+                        console.log(err);
+                    } else {
+                        const lastFiveMessages = res.map((msg) => {
+                            return msg.messages.body;
+                        })
+                        recLoader(lastFiveMessages).then(results => {
+                            if (results != undefined || results != null) {
+                                Course.updateOne({
+                                    crn: post.crn
+                                }, {
+                                    $set: {
+                                        recommendations: results
+                                    }
+                                }, function (err) {
+                                    if (err) {
+                                        console.log(err);
+                                    }
+                                })
+                            }
+                        }).catch(e => {
+                            console.log(e);
+                        })
+                    }
+                })
 
                 var query = Course.findOne({
                     crn: post.crn

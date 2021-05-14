@@ -42,7 +42,7 @@ function ChatHeader(props) {
         <div className="chat-header-user">
           {props.selectedChat.avatar}
           <div>
-            {props.selectedChat.isSection === "false" ? (
+            {props.selectedChat.sections !== undefined ? (
               <h5>
                 {props.selectedChat.subject}-{props.selectedChat.course_number}:{" "}
                 {props.selectedChat.course_title}

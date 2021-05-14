@@ -162,6 +162,7 @@ function Index() {
         pinnedPosts={courseData.pinnedPosts}
         recommendations={courseData.recommendations}
         sections={courseData.sections}
+        isSection={courseData.isSection}
       />
     );
   }
