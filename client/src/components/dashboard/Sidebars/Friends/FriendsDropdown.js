@@ -7,11 +7,16 @@ import {
   DropdownMenu,
   DropdownItem,
 } from "reactstrap";
+import { Link } from "react-router-dom";
 
-const FriendsDropdown = () => {
+const FriendsDropdown = (props) => {
   const [dropdownOpen, setDropdownOpen] = useState(false);
 
   const toggle = () => setDropdownOpen((prevState) => !prevState);
+
+  function handleClick() {
+    console.log(props);
+  }
 
   return (
     <Dropdown isOpen={dropdownOpen} toggle={toggle}>
@@ -19,10 +24,13 @@ const FriendsDropdown = () => {
         <i className="ti ti-more"></i>
       </DropdownToggle>
       <DropdownMenu>
-        <DropdownItem>New chat</DropdownItem>
-        <DropdownItem>Profile</DropdownItem>
-        <DropdownItem divider />
-        <DropdownItem>Block</DropdownItem>
+        <a
+          target="_blank"
+          rel="noopener noreferrer"
+          href={"mailto:" + props.obj.email}
+        >
+          <DropdownItem>Email</DropdownItem>
+        </a>
       </DropdownMenu>
     </Dropdown>
   );

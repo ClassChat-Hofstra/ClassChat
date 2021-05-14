@@ -128,6 +128,9 @@ function Index() {
                       <h5>{item.name}</h5>
                       <p>Shares {mutualClassState[item._id]} courses</p>
                     </div>
+                    <div className="users-list-action action-toggle">
+                      <FriendsDropdown obj={item} />
+                    </div>
                   </div>
                 </li>
               );
