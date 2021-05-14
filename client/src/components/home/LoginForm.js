@@ -3,6 +3,8 @@ import { Form, Button, Modal, Alert } from "react-bootstrap";
 import { connect } from "react-redux";
 import { useAuth } from "../../contexts/AuthContext";
 import { Link, useHistory } from "react-router-dom";
+import { ReactComponent as Logo } from "../../assets/img/logo.svg";
+import logoImg from "../../assets/img/logo.svg";
 import RegisterForm from "./RegisterForm";
 
 function LoginForm(props) {
@@ -76,10 +78,14 @@ function LoginForm(props) {
       <Form onSubmit={onSubmit}>
         <img
           className="mb-4"
-          src="https://getbootstrap.com/docs/4.0/assets/brand/bootstrap-solid.svg"
+          src={logoImg}
           alt=""
           width="72"
           height="72"
+          style={{
+            filter:
+              "invert(26%) sepia(20%) saturate(5151%) hue-rotate(234deg) brightness(76%) contrast(165%)",
+          }}
         />
         {error && <Alert variant="danger">{error}</Alert>}
         <Form.Group size="lg" controlId="email">
