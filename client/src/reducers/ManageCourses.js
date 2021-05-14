@@ -7,15 +7,38 @@ const ManageCoursesReducer = (state = [], action) => {
         case "LOAD_COURSES":
             return action.payload;
         case "UPDATE_MESSAGES":
-            const courseToUpdate = state.find((course) => course.crn === action.payload.crn);
-            const filteredState = state.filter(course => course.crn !== action.payload.crn);
+            console.log(action.payload);
 
-            if (courseToUpdate !== undefined && filteredState !== undefined) {
-                courseToUpdate.messages.push(action.payload.message);
-                console.log(courseToUpdate);
-                console.log(filteredState);
-                return [...filteredState, courseToUpdate];
+            if (action.payload.isSection === false) {
+                const courseToUpdate = state.find((course) => course.crn === action.payload.crn);
+                const filteredState = state.filter(course => course.crn !== action.payload.crn);
+
+                if (courseToUpdate !== undefined && filteredState !== undefined) {
+                    courseToUpdate.messages.push(action.payload.message);
+                    // console.log(courseToUpdate);
+                    // console.log(filteredState);
+                    return [...filteredState, courseToUpdate];
+                }
+                return state;
+            } else {
+                const superChatCRN = action.payload.crn.split("-")[0];
+                const courseToUpdate = state.find((course) => course.crn === superChatCRN);
+                const filteredState = state.filter(course => course.crn !== superChatCRN);
+
+                if (courseToUpdate !== undefined && filteredState !== undefined) {
+                    courseToUpdate.messages.push(action.payload.message);
+                    courseToUpdate.sections.map((section) => {
+                        if (section.crn === action.payload.crn) {
+                            section.messages.push(action.payload.message);
+                        }
+                        return section;
+                    })
+                    return [...filteredState, courseToUpdate];
+                }
+
             }
+
+
             return state;
         case "PIN_POST":
             console.log(action);

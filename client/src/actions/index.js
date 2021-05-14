@@ -14,12 +14,13 @@ export const removeCourse = (crn) => {
     }
 }
 
-export const updateMessages = (message, crn) => {
+export const updateMessages = (message, crn, isSection) => {
     return {
         type: "UPDATE_MESSAGES",
         payload: {
             message,
-            crn
+            crn,
+            isSection
         }
     }
 }

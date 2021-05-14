@@ -27,6 +27,7 @@ const Message = require("./models/Message");
 const {
     log
 } = require('console');
+const Section = require('./models/Section');
 
 app.use(express.static(path.join(__dirname, "client", "build")))
 app.use(express.json());
@@ -75,6 +76,7 @@ io.on('connection', (socket) => {
     })
 
     socket.on('send-post', (post) => {
+        console.log(post);
         User.findOne({
             email: post.email
         }, function (err, user) {
@@ -86,13 +88,24 @@ io.on('connection', (socket) => {
                     body: post.body,
                     date: post.obj.date
                 })
-                Course.updateOne({
-                    crn: post.crn
-                }, {
-                    $push: {
-                        messages: newMessage
-                    }
-                }).catch((err) => console.log(err));
+                if (post.isSection === "false") {
+                    Course.updateOne({
+                        crn: post.crn
+                    }, {
+                        $push: {
+                            messages: newMessage
+                        }
+                    }).catch((err) => console.log(err));
+                } else {
+                    Section.updateOne({
+                        crn: post.crn
+                    }, {
+                        $push: {
+                            messages: newMessage
+                        }
+                    }).catch(e => console.log(e))
+                }
+
 
                 var query = Course.aggregate([{
                         $match: {
@@ -143,11 +156,11 @@ io.on('connection', (socket) => {
                 //     }
                 // })
 
-                // var query = Course.findOne({
-                //     crn: post.crn
-                // }).sort({
-                //     _id: -1
-                // }).slice("messages", 5)
+                var query = Course.findOne({
+                    crn: post.crn
+                }).sort({
+                    _id: -1
+                }).slice("messages", 5)
 
 
                 // query.exec((err, result) => {
@@ -169,7 +182,8 @@ io.on('connection', (socket) => {
 
                 socket.to(post.crn).emit("recieve", {
                     obj: post.obj,
-                    crn: post.crn
+                    crn: post.crn,
+                    isSection: post.isSection
                 })
             }
         })

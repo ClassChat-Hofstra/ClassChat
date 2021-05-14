@@ -161,7 +161,6 @@ function Index() {
         messages={courseData.messages}
         pinnedPosts={courseData.pinnedPosts}
         recommendations={courseData.recommendations}
-        isSection="false"
         sections={courseData.sections}
       />
     );

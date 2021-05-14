@@ -2,6 +2,9 @@ const express = require('express');
 
 const User = require("../models/User");
 const Course = require("../models/Course");
+const Section = require("../models/Section");
+
+
 
 
 const mongoose_fuzzy_searching = require('mongoose-fuzzy-searching');
@@ -24,6 +27,18 @@ router.post("/currentcourses", (req, res) => {
             path: "courses",
             populate: {
                 path: "messages.sender",
+                // populate: {
+                //     path: "sender"
+                // }
+            }
+        })
+        .populate({
+            path: "courses",
+            populate: {
+                path: "sections",
+                populate: {
+                    path: "messages.sender"
+                }
                 // populate: {
                 //     path: "sender"
                 // }
@@ -153,19 +168,36 @@ router.post("/removepin", (req, res) => {
 })
 
 router.post("/addsection", (req, res) => {
-    Course.updateOne({
-        crn: req.body.crn
-    }, {
-        $push: {
-            sections: req.body.sectionObj
-        }
-    }, function (err, result) {
-        if (err) {
-            console.log(err);
-        } else {
-            res.send(result);
-        }
-    })
+    const sectionObj = req.body.sectionObj;
+    const newSection = new Section({
+        sectionName: sectionObj.sectionName,
+        crn: sectionObj.crn,
+        course_title: sectionObj.course_title,
+        course_number: sectionObj.course_number,
+        subject: sectionObj.subject,
+        course_section: sectionObj.course_section,
+        users: [],
+        messages: [],
+        pinnedPosts: []
+
+    });
+    newSection.save().then((section) => {
+        Course.updateOne({
+            crn: req.body.crn
+        }, {
+            $push: {
+                sections: section._id
+            }
+        }, function (err, result) {
+            if (err) {
+                console.log(err);
+            } else {
+                res.send(result);
+            }
+        })
+    }).catch(e => console.log(e));
+
+
 })
 
 module.exports = router;

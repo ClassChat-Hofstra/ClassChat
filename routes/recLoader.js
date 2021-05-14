@@ -31,9 +31,12 @@ async function entityRecognition(client, messages) {
     entityResults.forEach(document => {
         // console.log(`Document ID: ${document.id}`);
         document.entities.slice(0, 2).forEach(entity => {
-            //console.log(`\tName: ${entity.text} \tCategory: ${entity.category} \tSubcategory: ${entity.subCategory ? entity.subCategory : "N/A"}`);
+            console.log(`\tName: ${entity.text} \tCategory: ${entity.category} \tSubcategory: ${entity.subCategory ? entity.subCategory : "N/A"}`);
             //console.log(`\tScore: ${entity.confidenceScore}`);
-            keywords.add(entity.text);
+            if (entity.category === "Skill") {
+                keywords.add(entity.text);
+            }
+
         });
     });
     return keywords;

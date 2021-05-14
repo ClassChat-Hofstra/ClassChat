@@ -28,15 +28,17 @@ function Chat() {
   const dispatch = useDispatch();
 
   const handleSubmit = (newValue) => {
+    const isSection = selectedChat.sectionName !== undefined ? true : false;
+
     if (newValue.body.length === 0) {
       return;
     }
-    console.log(newValue);
     socket.emit("send-post", {
       email: newValue.sender.email,
       body: newValue.body,
       crn: selectedChat.crn,
       obj: newValue,
+      isSection: isSection,
     });
     // axios
     //   .post("/messages/newmessage", {
@@ -68,7 +70,7 @@ function Chat() {
       // const course = courseRoster.find((crse) => crse.crn === post.crn);
       // course.messages.push(post.msg);
       //selectedChat.messages.push(post.msg);
-      dispatch(updateMessages(post.obj, post.crn));
+      dispatch(updateMessages(post.obj, post.crn, post.isSection));
     });
     return () => socket.off("recieve");
   }, [dispatch, selectedChat.messages, socket]);

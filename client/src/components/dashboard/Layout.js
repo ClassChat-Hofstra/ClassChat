@@ -38,9 +38,19 @@ function Layout() {
     axios
       .post("/courses/currentcourses", { email: currentUser.email })
       .then((res) => {
+        const roomsArr = [];
+        res.data.forEach((course) => {
+          roomsArr.push(course.crn);
+          if (course.sections) {
+            course.sections.forEach((section) => {
+              roomsArr.push(section.crn);
+            });
+          }
+        });
+        console.log(roomsArr);
         const rooms = res.data.map((course) => course.crn);
         console.log(rooms);
-        socket.emit("subscribe", rooms);
+        socket.emit("subscribe", roomsArr);
         dispatch(loadCourses(res.data));
       });
 

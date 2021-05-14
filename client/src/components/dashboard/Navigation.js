@@ -10,6 +10,7 @@ import { mobileSidebarAction } from "../../actions";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSchool } from "@fortawesome/free-solid-svg-icons";
 import { useAuth } from "../../contexts/AuthContext";
+import { unselectChat } from "../../actions";
 
 function Navigation() {
   const { selectedSidebar } = useSelector((state) => state);
@@ -37,6 +38,7 @@ function Navigation() {
   async function handleLogout() {
     await logout();
     history.push("/");
+    dispatch(unselectChat());
   }
 
   const navigationItems = [

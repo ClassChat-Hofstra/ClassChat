@@ -9,7 +9,7 @@ export default function ChatHeaderNav(props) {
   const selectedChat = useSelector((state) => state.selectedChat);
   const [key, setKey] = useState("");
   //console.log(props.pinned);
-  console.log(props);
+  //console.log(props);
 
   function convertWebRecsToArray() {
     const recsArr = [];
@@ -45,7 +45,7 @@ export default function ChatHeaderNav(props) {
     }
   }
 
-  console.log(convertWebRecsToArray());
+  //console.log(convertWebRecsToArray());
 
   return (
     <div>
