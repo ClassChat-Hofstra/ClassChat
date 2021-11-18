@@ -1,2 +1,2 @@
 # ClassChat
-sup
+Main repository for ClassChat project.
